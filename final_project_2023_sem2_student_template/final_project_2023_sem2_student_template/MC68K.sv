@@ -96,7 +96,7 @@ vga80x40_Altera vga80x40_Altera_1(
 	.wren(update_graphics && ~AS_L && ~LDS_L),
 	.wrencolor(update_graphics && ~AS_L && ~UDS_L),
 	.wrencursor(wrencursor),
-	.wraddress({1'b0, CPU_Address[11:1]}),
+	.wraddress(CPU_Address[12:1]),
 	.wrdata(CPU_DataBusOut[7:0]),
 	.wcolor(octl),
 	.clk25MHz(Clock25Mhz),

@@ -34,7 +34,7 @@ struct
 int printw_x;  //hint: could be a useful variable
 int printw_y;  //hint: could be a useful variable
 
-int cx, cy, cl;
+char cx, cy;
 int timer_count;
 
 
@@ -67,7 +67,8 @@ int mod_bld(int x, int y)
 
 void Timer_ISR() {
     ++timer_count;
-	printf("Timer ISR, %d\n", timer_count);
+	// printf("Timer ISR, %d\n", timer_count);
+	Timer1Control = 3;
 }
 // #define StartOfExceptionVectorTable 0x08030000
 // void InstallExceptionHandler(void (*function_ptr)(), int level)
@@ -92,7 +93,7 @@ void Wait250ms_here(void)
 
 void changeChar(int addr, char c){
     *(char*)(VGA_ADDRESS + addr * 2 + 1) = c;
-	// *(char*)(VGA_ADDRESS + addr * 2) = c;
+	*(char*)(VGA_ADDRESS + addr * 2) = c;
 }
 
 void changeColor(int addr, char color){
@@ -102,26 +103,13 @@ void changeColor(int addr, char color){
 	octlAddress1 = change;
 }
 
-void updateChar(int x, int y, char c){
-    changeChar(y * screen_width + x, c);
-}
-
-void updateColor(int x, int y, char color){
-    changeColor(y * screen_width + x, color);
-}
-
-void charWithSetColor(int x, int y, char c){
-    updateColor(x, y, octl);
-    updateChar(x, y, c);
-}
-
-void writeVGA(int addr, char c , char color){
-    changeColor(addr, color);
+void writeVGA(int addr, char c){
+    changeColor(addr, octl);
     changeChar(addr, c);
 }
 
-void updateVGA(int x, int y, char c, char color){
-    writeVGA(y * screen_width + x, c, color);
+void updateVGA(int x, int y, char c){
+    writeVGA(y * screen_width + x, c);
 }
 
 void update_cursor(int x, int y){
@@ -140,9 +128,8 @@ void go_to_top_corner()
 void clear_screen()
 {
 	int i;
-	for (i = 0; i <= 0xFFF; i++) {
-		writeVGA(i, ' ', octl & 0x07);
-		printf("%d\n", i);
+	for (i = 0; i <= 3200; i++) {
+		changeChar(i, ' ');
 	}
 	// int iiii, jjjjj;
 	// for(iiii = 0; iiii < screen_height; iiii++){
@@ -152,6 +139,17 @@ void clear_screen()
 	// 	}
 	// }
 };
+
+void say_game_over() {
+	talkphonemeGG2();
+	talkphonemeEH();
+	talkphonemeMM();
+	endword();
+	talkphonemeOW();
+	talkphonemeVV();
+	talkphonemeER1();
+	endword();
+}
 
 
 void say_awesome() {
@@ -182,11 +180,11 @@ void putcharxy(int x, int y, char ch,char* error_message) {
 //an error message in Hyperterminal during debugging if, 
 //for example, x or y are out of range
 
-	if (x < 0 || x >= screen_height || y < 0 || y >= screen_width) {
+	if (x < 0 || x >= screen_width || y < 0 || y >= screen_height) {
 		printf("%s\n", error_message);
 		// printf("x: %d, y: %d\n", x, y);
 	} else {
-		updateVGA(x, y, ch, octl & 0x07);
+		updateVGA(x, y, ch);
 	}
 }
 
@@ -198,7 +196,7 @@ void gotoxy(int x, int y)
 void set_vga_control_reg(char x) {
 	//Set the value of the control register in the VGA core
 	//write this function
-	octl = x & 0xF8;
+	octl = (x & 0xF8) | (octl & 0x7);
 }
 
 
@@ -210,7 +208,7 @@ char get_vga_control_reg() {
 
 void set_color(int color) {
 	octl &= 0xF8; //8'b1111_1000
-	octl |= color;
+	octl |= (color & 0x7); //8'b0000_0111
 }
 
 int clock() {
@@ -244,31 +242,38 @@ void display_game_over(char *str, int x, int y) {
 	int num;
 	num = 0;
 	while (str[num] != '\0') {
-		update_cursor(x, y);
+		Wait250ms_here();
+		update_cursor(x + 1, y);
+		putcharxy(x + 1, y, ' ', "game over");
+		// printf("cx: %d, cy: %d\n", cx, cy);
+		Wait1ms_here();
 		putcharxy(x, y, str[num], "game over");
 		x++;
 		num++;
-		Wait250ms_here();
 	}
+	if (str[0] == 'S')
+		update_cursor(x - 1, y);
 }
 
 
 void gameOver()
 {
 	// 36, 20: Game over!
-	char *game_over = "Game over!";
+	int test = 5000;
+	char *game_over = "Game over! ";
 	char score_str[128];
 	char num;
+	say_game_over();
 	num = 1;
-	sprintf(score_str,"Score: %d",tetris_score);
+	sprintf(score_str,"Score: %d  ", tetris_score);
 	// 36, 22: Score: %d
+	set_vga_control_reg(0xE0);
 	printw_x = 36;
 	printw_y = 20;
 	display_game_over(game_over, printw_x, printw_y);
 	printw_x = 36;
 	printw_y = 22;
 	display_game_over(score_str, printw_x, printw_y);
-	set_vga_control_reg(0xF0);
 	while (1) {
 		printw_x = 36;
 		printw_y = 20;
@@ -279,6 +284,9 @@ void gameOver()
 		printw(score_str, "score");
 		Wait250ms_here();
 		++num;
+		if (num > 7) {
+			num = 1;
+		}
 	}
 	set_vga_control_reg(0xA2);
 }
@@ -532,8 +540,8 @@ int tetris_main() {
 	printw_y = 0;
 	GameOn = TRUE;
 	InstallExceptionHandler(Timer_ISR, 30);
-	// Timer1Data = 0x25;  // 100 ms
-	// Timer1Control = 3;  // enable timer, periodic mode
+	Timer1Data = 0x25;  // 100 ms
+	Timer1Control = 3;  // enable timer, periodic mode
 	// InstallExceptionHandler(Timer_ISR, 29);
 	// InstallExceptionHandler(Timer_ISR, 28);
 	// InstallExceptionHandler(Timer_ISR, 27);
@@ -638,7 +646,7 @@ ShapesArray[6].array[3][1] = 	0;
 ShapesArray[6].array[3][2] = 	0;
 ShapesArray[6].array[3][3] = 	0;
 ShapesArray[6].width       = 	4;
-    set_color(1);
+    set_color(OCTL_TETRIS_DEFAULT);
 	set_vga_control_reg(OCTL_TETRIS_DEFAULT);
     tetris_score = 0;
 	initTetris_Speed();

@@ -36,7 +36,7 @@ module vga80x40_Altera (
         R = {out_R, out_R, out_R, out_R, out_R, out_R, out_R, out_R};
         G = {out_G, out_G, out_G, out_G, out_G, out_G, out_G, out_G};
         B = {out_B, out_B, out_B, out_B, out_B, out_B, out_B, out_B};
-        if (start || ram_clor == 8'h00) 
+        if (start == 8'h1) 
             intoit = 8'hF2;
         else
             intoit = ram_clor; // octl[7:3]   

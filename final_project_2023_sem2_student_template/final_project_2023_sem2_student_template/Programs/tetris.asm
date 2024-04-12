@@ -27,7 +27,7 @@
 ; } Tetris_Speed;
 ; int printw_x;  //hint: could be a useful variable
 ; int printw_y;  //hint: could be a useful variable
-; int cx, cy, cl;
+; char cx, cy;
 ; int timer_count;
 ; /* Compute x mod y using binary long division. */
 ; int mod_bld(int x, int y)
@@ -85,11 +85,9 @@ mod_bld_6:
 _Timer_ISR:
 ; ++timer_count;
        addq.l    #1,_timer_count.L
-; printf("Timer ISR, %d\n", timer_count);
-       move.l    _timer_count.L,-(A7)
-       pea       @tetris_1.L
-       jsr       _printf
-       addq.w    #8,A7
+; // printf("Timer ISR, %d\n", timer_count);
+; Timer1Control = 3;
+       move.b    #3,4194354
        rts
 ; }
 ; // #define StartOfExceptionVectorTable 0x08030000
@@ -150,9 +148,18 @@ _changeChar:
        add.l     D1,D0
        move.l    D0,A0
        move.b    15(A6),(A0)
+; *(char*)(VGA_ADDRESS + addr * 2) = c;
+       move.l    #-65536,D0
+       move.l    8(A6),-(A7)
+       pea       2
+       jsr       LMUL
+       move.l    (A7),D1
+       addq.w    #8,A7
+       add.l     D1,D0
+       move.l    D0,A0
+       move.b    15(A6),(A0)
        unlk      A6
        rts
-; // *(char*)(VGA_ADDRESS + addr * 2) = c;
 ; }
 ; void changeColor(int addr, char color){
        xdef      _changeColor
@@ -175,79 +182,12 @@ _changeColor:
        unlk      A6
        rts
 ; }
-; void updateChar(int x, int y, char c){
-       xdef      _updateChar
-_updateChar:
-       link      A6,#0
-; changeChar(y * screen_width + x, c);
-       move.b    19(A6),D1
-       ext.w     D1
-       ext.l     D1
-       move.l    D1,-(A7)
-       move.l    12(A6),-(A7)
-       pea       80
-       jsr       LMUL
-       move.l    (A7),D1
-       addq.w    #8,A7
-       add.l     8(A6),D1
-       move.l    D1,-(A7)
-       jsr       _changeChar
-       addq.w    #8,A7
-       unlk      A6
-       rts
-; }
-; void updateColor(int x, int y, char color){
-       xdef      _updateColor
-_updateColor:
-       link      A6,#0
-; changeColor(y * screen_width + x, color);
-       move.b    19(A6),D1
-       ext.w     D1
-       ext.l     D1
-       move.l    D1,-(A7)
-       move.l    12(A6),-(A7)
-       pea       80
-       jsr       LMUL
-       move.l    (A7),D1
-       addq.w    #8,A7
-       add.l     8(A6),D1
-       move.l    D1,-(A7)
-       jsr       _changeColor
-       addq.w    #8,A7
-       unlk      A6
-       rts
-; }
-; void charWithSetColor(int x, int y, char c){
-       xdef      _charWithSetColor
-_charWithSetColor:
-       link      A6,#0
-; updateColor(x, y, octl);
-       move.b    _octl.L,D1
-       ext.w     D1
-       ext.l     D1
-       move.l    D1,-(A7)
-       move.l    12(A6),-(A7)
-       move.l    8(A6),-(A7)
-       jsr       _updateColor
-       add.w     #12,A7
-; updateChar(x, y, c);
-       move.b    19(A6),D1
-       ext.w     D1
-       ext.l     D1
-       move.l    D1,-(A7)
-       move.l    12(A6),-(A7)
-       move.l    8(A6),-(A7)
-       jsr       _updateChar
-       add.w     #12,A7
-       unlk      A6
-       rts
-; }
-; void writeVGA(int addr, char c , char color){
+; void writeVGA(int addr, char c){
        xdef      _writeVGA
 _writeVGA:
        link      A6,#0
-; changeColor(addr, color);
-       move.b    19(A6),D1
+; changeColor(addr, octl);
+       move.b    _octl.L,D1
        ext.w     D1
        ext.l     D1
        move.l    D1,-(A7)
@@ -265,15 +205,11 @@ _writeVGA:
        unlk      A6
        rts
 ; }
-; void updateVGA(int x, int y, char c, char color){
+; void updateVGA(int x, int y, char c){
        xdef      _updateVGA
 _updateVGA:
        link      A6,#0
-; writeVGA(y * screen_width + x, c, color);
-       move.b    23(A6),D1
-       ext.w     D1
-       ext.l     D1
-       move.l    D1,-(A7)
+; writeVGA(y * screen_width + x, c);
        move.b    19(A6),D1
        ext.w     D1
        ext.l     D1
@@ -286,7 +222,7 @@ _updateVGA:
        add.l     8(A6),D1
        move.l    D1,-(A7)
        jsr       _writeVGA
-       add.w     #12,A7
+       addq.w    #8,A7
        unlk      A6
        rts
 ; }
@@ -295,21 +231,19 @@ _updateVGA:
 _update_cursor:
        link      A6,#0
 ; cx = x;
-       move.l    8(A6),_cx.L
+       move.l    8(A6),D0
+       move.b    D0,_cx.L
 ; cy = y;
-       move.l    12(A6),_cy.L
+       move.l    12(A6),D0
+       move.b    D0,_cy.L
 ; cursor_x = cx;
-       move.l    _cx.L,D0
-       move.b    D0,-16711680
+       move.b    _cx.L,-16711680
 ; cursor_x1 = cx;
-       move.l    _cx.L,D0
-       move.b    D0,-16711679
+       move.b    _cx.L,-16711679
 ; cursor_y = cy;
-       move.l    _cy.L,D0
-       move.b    D0,-16711678
+       move.b    _cy.L,-16711678
 ; cursor_y1 = cy;
-       move.l    _cy.L,D0
-       move.b    D0,-16711677
+       move.b    _cy.L,-16711677
        unlk      A6
        rts
 ; }
@@ -330,25 +264,15 @@ _go_to_top_corner:
 _clear_screen:
        move.l    D2,-(A7)
 ; int i;
-; for (i = 0; i <= 0xFFF; i++) {
+; for (i = 0; i <= 3200; i++) {
        clr.l     D2
 clear_screen_1:
-       cmp.l     #4095,D2
+       cmp.l     #3200,D2
        bgt.s     clear_screen_3
-; writeVGA(i, ' ', octl & 0x07);
-       move.b    _octl.L,D1
-       and.b     #7,D1
-       ext.w     D1
-       ext.l     D1
-       move.l    D1,-(A7)
+; changeChar(i, ' ');
        pea       32
        move.l    D2,-(A7)
-       jsr       _writeVGA
-       add.w     #12,A7
-; printf("%d\n", i);
-       move.l    D2,-(A7)
-       pea       @tetris_2.L
-       jsr       _printf
+       jsr       _changeChar
        addq.w    #8,A7
        addq.l    #1,D2
        bra       clear_screen_1
@@ -364,6 +288,27 @@ clear_screen_3:
 ; // 	}
 ; // }
 ; };
+; void say_game_over() {
+       xdef      _say_game_over
+_say_game_over:
+; talkphonemeGG2();
+       jsr       _talkphonemeGG2
+; talkphonemeEH();
+       jsr       _talkphonemeEH
+; talkphonemeMM();
+       jsr       _talkphonemeMM
+; endword();
+       jsr       _endword
+; talkphonemeOW();
+       jsr       _talkphonemeOW
+; talkphonemeVV();
+       jsr       _talkphonemeVV
+; talkphonemeER1();
+       jsr       _talkphonemeER1
+; endword();
+       jsr       _endword
+       rts
+; }
 ; void say_awesome() {
        xdef      _say_awesome
 _say_awesome:
@@ -414,31 +359,26 @@ _putcharxy:
 ; //The parameter "error_message" can be used to print out
 ; //an error message in Hyperterminal during debugging if, 
 ; //for example, x or y are out of range
-; if (x < 0 || x >= screen_height || y < 0 || y >= screen_width) {
+; if (x < 0 || x >= screen_width || y < 0 || y >= screen_height) {
        cmp.l     #0,D3
        blt.s     putcharxy_3
-       cmp.l     #40,D3
+       cmp.l     #80,D3
        bge.s     putcharxy_3
        cmp.l     #0,D2
        blt.s     putcharxy_3
-       cmp.l     #80,D2
+       cmp.l     #40,D2
        blt.s     putcharxy_1
 putcharxy_3:
 ; printf("%s\n", error_message);
        move.l    20(A6),-(A7)
-       pea       @tetris_3.L
+       pea       @tetris_1.L
        jsr       _printf
        addq.w    #8,A7
        bra.s     putcharxy_2
 putcharxy_1:
 ; // printf("x: %d, y: %d\n", x, y);
 ; } else {
-; updateVGA(x, y, ch, octl & 0x07);
-       move.b    _octl.L,D1
-       and.b     #7,D1
-       ext.w     D1
-       ext.l     D1
-       move.l    D1,-(A7)
+; updateVGA(x, y, ch);
        move.b    19(A6),D1
        ext.w     D1
        ext.l     D1
@@ -446,7 +386,7 @@ putcharxy_1:
        move.l    D2,-(A7)
        move.l    D3,-(A7)
        jsr       _updateVGA
-       add.w     #16,A7
+       add.w     #12,A7
 putcharxy_2:
        movem.l   (A7)+,D2/D3
        unlk      A6
@@ -472,10 +412,14 @@ _set_vga_control_reg:
        link      A6,#0
 ; //Set the value of the control register in the VGA core
 ; //write this function
-; octl = x & 0xF8;
+; octl = (x & 0xF8) | (octl & 0x7);
        move.b    11(A6),D0
        ext.w     D0
        and.w     #248,D0
+       move.b    _octl.L,D1
+       and.b     #7,D1
+       ext.w     D1
+       or.w      D1,D0
        move.b    D0,_octl.L
        unlk      A6
        rts
@@ -495,8 +439,9 @@ _set_color:
        link      A6,#0
 ; octl &= 0xF8; //8'b1111_1000
        and.b     #248,_octl.L
-; octl |= color;
+; octl |= (color & 0x7); //8'b0000_0111
        move.l    8(A6),D0
+       and.l     #7,D0
        or.b      D0,_octl.L
        unlk      A6
        rts
@@ -575,69 +520,106 @@ printw_3:
        xdef      _display_game_over
 _display_game_over:
        link      A6,#0
-       movem.l   D2/D3,-(A7)
-       move.l    12(A6),D3
+       movem.l   D2/D3/D4/D5,-(A7)
+       move.l    12(A6),D2
+       move.l    16(A6),D3
+       move.l    8(A6),D5
 ; int num;
 ; num = 0;
-       clr.l     D2
+       clr.l     D4
 ; while (str[num] != '\0') {
 display_game_over_1:
-       move.l    8(A6),A0
-       move.b    0(A0,D2.L),D0
+       move.l    D5,A0
+       move.b    0(A0,D4.L),D0
        beq       display_game_over_3
-; update_cursor(x, y);
-       move.l    16(A6),-(A7)
+; Wait250ms_here();
+       jsr       _Wait250ms_here
+; update_cursor(x + 1, y);
        move.l    D3,-(A7)
+       move.l    D2,D1
+       addq.l    #1,D1
+       move.l    D1,-(A7)
        jsr       _update_cursor
        addq.w    #8,A7
+; putcharxy(x + 1, y, ' ', "game over");
+       pea       @tetris_2.L
+       pea       32
+       move.l    D3,-(A7)
+       move.l    D2,D1
+       addq.l    #1,D1
+       move.l    D1,-(A7)
+       jsr       _putcharxy
+       add.w     #16,A7
+; // printf("cx: %d, cy: %d\n", cx, cy);
+; Wait1ms_here();
+       jsr       _Wait1ms_here
 ; putcharxy(x, y, str[num], "game over");
-       pea       @tetris_4.L
-       move.l    8(A6),A0
-       move.b    0(A0,D2.L),D1
+       pea       @tetris_2.L
+       move.l    D5,A0
+       move.b    0(A0,D4.L),D1
        ext.w     D1
        ext.l     D1
        move.l    D1,-(A7)
-       move.l    16(A6),-(A7)
        move.l    D3,-(A7)
+       move.l    D2,-(A7)
        jsr       _putcharxy
        add.w     #16,A7
 ; x++;
-       addq.l    #1,D3
-; num++;
        addq.l    #1,D2
-; Wait250ms_here();
-       jsr       _Wait250ms_here
+; num++;
+       addq.l    #1,D4
        bra       display_game_over_1
 display_game_over_3:
-       movem.l   (A7)+,D2/D3
+; }
+; if (str[0] == 'S')
+       move.l    D5,A0
+       move.b    (A0),D0
+       cmp.b     #83,D0
+       bne.s     display_game_over_4
+; update_cursor(x - 1, y);
+       move.l    D3,-(A7)
+       move.l    D2,D1
+       subq.l    #1,D1
+       move.l    D1,-(A7)
+       jsr       _update_cursor
+       addq.w    #8,A7
+display_game_over_4:
+       movem.l   (A7)+,D2/D3/D4/D5
        unlk      A6
        rts
-; }
 ; }
 ; void gameOver()
 ; {
        xdef      _gameOver
 _gameOver:
-       link      A6,#-128
+       link      A6,#-132
        movem.l   D2/D3/A2/A3/A4,-(A7)
        lea       _printw_y.L,A2
        lea       _printw_x.L,A3
        lea       -128(A6),A4
 ; // 36, 20: Game over!
-; char *game_over = "Game over!";
-       lea       @tetris_5.L,A0
+; int test = 5000;
+       move.l    #5000,-132(A6)
+; char *game_over = "Game over! ";
+       lea       @tetris_3.L,A0
        move.l    A0,D3
 ; char score_str[128];
 ; char num;
+; say_game_over();
+       jsr       _say_game_over
 ; num = 1;
        moveq     #1,D2
-; sprintf(score_str,"Score: %d",tetris_score);
+; sprintf(score_str,"Score: %d  ", tetris_score);
        move.l    _tetris_score.L,-(A7)
-       pea       @tetris_6.L
+       pea       @tetris_4.L
        move.l    A4,-(A7)
        jsr       _sprintf
        add.w     #12,A7
 ; // 36, 22: Score: %d
+; set_vga_control_reg(0xE0);
+       pea       224
+       jsr       _set_vga_control_reg
+       addq.w    #4,A7
 ; printw_x = 36;
        move.l    #36,(A3)
 ; printw_y = 20;
@@ -658,10 +640,6 @@ _gameOver:
        move.l    A4,-(A7)
        jsr       _display_game_over
        add.w     #12,A7
-; set_vga_control_reg(0xF0);
-       pea       240
-       jsr       _set_vga_control_reg
-       addq.w    #4,A7
 ; while (1) {
 gameOver_1:
 ; printw_x = 36;
@@ -675,7 +653,7 @@ gameOver_1:
        jsr       _set_color
        addq.w    #4,A7
 ; printw(game_over, "game over");
-       pea       @tetris_4.L
+       pea       @tetris_2.L
        move.l    D3,-(A7)
        jsr       _printw
        addq.w    #8,A7
@@ -684,7 +662,7 @@ gameOver_1:
 ; printw_y = 22;
        move.l    #22,(A2)
 ; printw(score_str, "score");
-       pea       @tetris_7.L
+       pea       @tetris_5.L
        move.l    A4,-(A7)
        jsr       _printw
        addq.w    #8,A7
@@ -692,7 +670,14 @@ gameOver_1:
        jsr       _Wait250ms_here
 ; ++num;
        addq.b    #1,D2
+; if (num > 7) {
+       cmp.b     #7,D2
+       ble.s     gameOver_4
+; num = 1;
+       moveq     #1,D2
+gameOver_4:
        bra       gameOver_1
+; }
 ; }
 ; set_vga_control_reg(0xA2);
 ; }
@@ -1257,8 +1242,8 @@ PrintTable_9:
 ; go_to_top_corner();
        jsr       _go_to_top_corner
 ; printw("\n\n\n","initial_newline");
-       pea       @tetris_9.L
-       pea       @tetris_8.L
+       pea       @tetris_7.L
+       pea       @tetris_6.L
        jsr       (A2)
        addq.w    #8,A7
 ; for(i=0; i<TETRIS_COLS-9; i++) {
@@ -1267,8 +1252,8 @@ PrintTable_15:
        cmp.l     #6,D2
        bge.s     PrintTable_17
 ; printw(" ","space");
-       pea       @tetris_11.L
-       pea       @tetris_10.L
+       pea       @tetris_9.L
+       pea       @tetris_8.L
        jsr       (A2)
        addq.w    #8,A7
        addq.l    #1,D2
@@ -1276,8 +1261,8 @@ PrintTable_15:
 PrintTable_17:
 ; }
 ; printw("CPEN412 Tetris\n","title");
-       pea       @tetris_13.L
-       pea       @tetris_12.L
+       pea       @tetris_11.L
+       pea       @tetris_10.L
        jsr       (A2)
        addq.w    #8,A7
 ; for(i = 0; i < TETRIS_ROWS ;i++){
@@ -1302,16 +1287,16 @@ PrintTable_21:
        add.b     0(A0,D3.L),D0
        beq.s     PrintTable_24
 ; printw("#","table#");
-       pea       @tetris_15.L
-       pea       @tetris_14.L
+       pea       @tetris_13.L
+       pea       @tetris_12.L
        jsr       (A2)
        addq.w    #8,A7
        bra.s     PrintTable_25
 PrintTable_24:
 ; } else {
 ; printw(".","table.");
-       pea       @tetris_17.L
-       pea       @tetris_16.L
+       pea       @tetris_15.L
+       pea       @tetris_14.L
        jsr       (A2)
        addq.w    #8,A7
 PrintTable_25:
@@ -1322,8 +1307,8 @@ PrintTable_23:
 ; //printw(" ","space2");
 ; }
 ; printw("\n","newline1");
-       pea       @tetris_19.L
-       pea       @tetris_18.L
+       pea       @tetris_17.L
+       pea       @tetris_16.L
        jsr       (A2)
        addq.w    #8,A7
        addq.l    #1,D2
@@ -1332,12 +1317,12 @@ PrintTable_20:
 ; }
 ; sprintf(score_str,"\nScore: %d\n",tetris_score);
        move.l    _tetris_score.L,-(A7)
-       pea       @tetris_20.L
+       pea       @tetris_18.L
        pea       -428(A6)
        jsr       _sprintf
        add.w     #12,A7
 ; printw(score_str,"scoreprint");
-       pea       @tetris_21.L
+       pea       @tetris_19.L
        pea       -428(A6)
        jsr       (A2)
        addq.w    #8,A7
@@ -1578,8 +1563,10 @@ _tetris_main:
        pea       _Timer_ISR.L
        jsr       _InstallExceptionHandler
        addq.w    #8,A7
-; // Timer1Data = 0x25;  // 100 ms
-; // Timer1Control = 3;  // enable timer, periodic mode
+; Timer1Data = 0x25;  // 100 ms
+       move.b    #37,4194352
+; Timer1Control = 3;  // enable timer, periodic mode
+       move.b    #3,4194354
 ; // InstallExceptionHandler(Timer_ISR, 29);
 ; // InstallExceptionHandler(Timer_ISR, 28);
 ; // InstallExceptionHandler(Timer_ISR, 27);
@@ -1764,8 +1751,8 @@ tetris_main_3:
        clr.b     168+12+3(A2)
 ; ShapesArray[6].width       = 	4;
        move.l    #4,184(A2)
-; set_color(1);
-       pea       1
+; set_color(OCTL_TETRIS_DEFAULT);
+       pea       162
        jsr       _set_color
        addq.w    #4,A7
 ; set_vga_control_reg(OCTL_TETRIS_DEFAULT);
@@ -1807,14 +1794,14 @@ tetris_main_10:
        tst.b     0(A0,D2.L)
        beq.s     tetris_main_13
 ; printf("#");
-       pea       @tetris_14.L
+       pea       @tetris_12.L
        jsr       (A3)
        addq.w    #4,A7
        bra.s     tetris_main_14
 tetris_main_13:
 ; } else {
 ; printf(".");
-       pea       @tetris_16.L
+       pea       @tetris_14.L
        jsr       (A3)
        addq.w    #4,A7
 tetris_main_14:
@@ -1824,7 +1811,7 @@ tetris_main_12:
 ; }
 ; }
 ; printf("\n");
-       pea       @tetris_18.L
+       pea       @tetris_16.L
        jsr       (A3)
        addq.w    #4,A7
        addq.l    #1,D3
@@ -1832,12 +1819,12 @@ tetris_main_12:
 tetris_main_9:
 ; }
 ; printf("\nGame over!\n");
-       pea       @tetris_22.L
+       pea       @tetris_20.L
        jsr       (A3)
        addq.w    #4,A7
 ; sprintf(score_str,"\nScore: %d\n",tetris_score);
        move.l    _tetris_score.L,-(A7)
-       pea       @tetris_20.L
+       pea       @tetris_18.L
        pea       -128(A6)
        jsr       _sprintf
        add.w     #12,A7
@@ -1853,51 +1840,46 @@ tetris_main_9:
 ; }
        section   const
 @tetris_1:
-       dc.b      84,105,109,101,114,32,73,83,82,44,32,37,100
-       dc.b      10,0
-@tetris_2:
-       dc.b      37,100,10,0
-@tetris_3:
        dc.b      37,115,10,0
-@tetris_4:
+@tetris_2:
        dc.b      103,97,109,101,32,111,118,101,114,0
+@tetris_3:
+       dc.b      71,97,109,101,32,111,118,101,114,33,32,0
+@tetris_4:
+       dc.b      83,99,111,114,101,58,32,37,100,32,32,0
 @tetris_5:
-       dc.b      71,97,109,101,32,111,118,101,114,33,0
-@tetris_6:
-       dc.b      83,99,111,114,101,58,32,37,100,0
-@tetris_7:
        dc.b      115,99,111,114,101,0
-@tetris_8:
+@tetris_6:
        dc.b      10,10,10,0
-@tetris_9:
+@tetris_7:
        dc.b      105,110,105,116,105,97,108,95,110,101,119,108
        dc.b      105,110,101,0
-@tetris_10:
+@tetris_8:
        dc.b      32,0
-@tetris_11:
+@tetris_9:
        dc.b      115,112,97,99,101,0
-@tetris_12:
+@tetris_10:
        dc.b      67,80,69,78,52,49,50,32,84,101,116,114,105,115
        dc.b      10,0
-@tetris_13:
+@tetris_11:
        dc.b      116,105,116,108,101,0
-@tetris_14:
+@tetris_12:
        dc.b      35,0
-@tetris_15:
+@tetris_13:
        dc.b      116,97,98,108,101,35,0
-@tetris_16:
+@tetris_14:
        dc.b      46,0
-@tetris_17:
+@tetris_15:
        dc.b      116,97,98,108,101,46,0
-@tetris_18:
+@tetris_16:
        dc.b      10,0
-@tetris_19:
+@tetris_17:
        dc.b      110,101,119,108,105,110,101,49,0
-@tetris_20:
+@tetris_18:
        dc.b      10,83,99,111,114,101,58,32,37,100,10,0
-@tetris_21:
+@tetris_19:
        dc.b      115,99,111,114,101,112,114,105,110,116,0
-@tetris_22:
+@tetris_20:
        dc.b      10,71,97,109,101,32,111,118,101,114,33,10,0
        section   bss
        xdef      _Table
@@ -1932,16 +1914,15 @@ _printw_y:
        ds.b      4
        xdef      _cx
 _cx:
-       ds.b      4
+       ds.b      1
        xdef      _cy
 _cy:
-       ds.b      4
-       xdef      _cl
-_cl:
-       ds.b      4
+       ds.b      1
        xdef      _timer_count
 _timer_count:
        ds.b      4
+       xref      _talkphonemeVV
+       xref      _talkphonemeGG2
        xref      LDIV
        xref      LMUL
        xref      _talkphonemeKK1
@@ -1952,6 +1933,7 @@ _timer_count:
        xref      _kbhit
        xref      _getch
        xref      _sprintf
+       xref      _talkphonemeER1
        xref      _talkphonemeEL
        xref      _talkphonemeEH
        xref      _talkphonemeUH

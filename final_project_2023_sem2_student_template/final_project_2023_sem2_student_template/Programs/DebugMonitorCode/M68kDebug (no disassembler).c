@@ -1045,7 +1045,7 @@ void menu(void)
             z = 0;
             // 一排80个
             // 一共40排
-            for (i = 0; i <= 0xFFF; i++) {
+            for (i = 0; i <= 0xFFFF; i++) {
                 data = (j + 'A');
                 writeVGA_debug(i, data, z);
                 ++j; ++z;
@@ -1057,14 +1057,14 @@ void menu(void)
             continue;
         }
 
-        if ( c == (char)('M'))  {
-            while (1){
-                *(char *)(VGA_ADDRESS) = 0x41;
-                printf("\nAddress: %ld", VGA_ADDRESS);
-            }
+        // if ( c == (char)('M'))  {
+        //     while (1){
+        //         *(char *)(VGA_ADDRESS) = 0x41;
+        //         printf("\nAddress: %ld", VGA_ADDRESS);
+        //     }
                 
-            continue;
-        }
+        //     continue;
+        // }
 
         // if ( c == (char)('S'))  {
         //     printf("\nSasha\n");
