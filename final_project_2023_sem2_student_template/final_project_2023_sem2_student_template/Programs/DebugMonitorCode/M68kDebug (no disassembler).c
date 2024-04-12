@@ -9,7 +9,11 @@
 #define TopOfStack 0x08040000
 //#define TopOfStack 0x0C000000
 
+#define voice *(char*)(0xFF00FFFE)
+#define VGA_ADDRESS 0xFFFF0000 
+
 /* DO NOT INITIALISE GLOBAL VARIABLES - DO IT in MAIN() */
+
 unsigned int i, x, y, z, PortA_Count;
 int     Trace, GoFlag, Echo;                       // used in tracing/single stepping
 
@@ -33,6 +37,45 @@ char WatchPointString[8][100] ;
 
 char    TempString[100] ;
 
+
+
+
+
+void Wait1ms(void)
+{
+    int i;
+    for (i = 0; i < 1000; i++)
+        ;
+}
+
+void Wait3ms(void)
+{
+    int i;
+    for (i = 0; i < 3; i++)
+        Wait1ms();
+}
+
+void Wait250ms(void)
+{
+    int i;
+    for (i = 0; i < 250; i++)
+        Wait1ms();
+}
+
+void Wait500ms(void)
+{
+    int i;
+    for (i = 0; i < 500; i++)
+        Wait1ms();
+}
+
+void Wait750ms(void)
+{
+    int i;
+    for (i = 0; i < 750; i++)
+        Wait1ms();
+}
+
 void InstallExceptionHandler( void (*function_ptr)(), int level)
 {
     volatile long int *RamVectorAddress = (volatile long int *)(StartOfExceptionVectorTable) ;   // pointer to the Ram based interrupt vector table created in Cstart in debug monitor
@@ -41,7 +84,17 @@ void InstallExceptionHandler( void (*function_ptr)(), int level)
 }
 
 void say_phoneme   (char phoneme_code) {
-		//you need to write this function		
+		//you need to write this function
+        voice = phoneme_code;
+}
+
+void say_Sasha(){
+    talkphonemeSS();
+	talkphonemeAA();
+	talkphonemeSH();
+	// talkphonemeHH1();
+	talkphonemeAA();
+	endword();
 }
 
 void say_hello() {
@@ -947,11 +1000,18 @@ void Help(void)
     printf(banner) ;
 }
 
+void writeVGA_debug(int addr, char data, char z) {
+    char *VGA = (char *)(VGA_ADDRESS + addr * 2);
+    *(char *)(0xFF030000) = (0xF2 & 0xF8) | z;
+    *(VGA) = data;
+    *(VGA + 1) = data;
+}
 
 void menu(void)
 {
-    char c;
+    char c, data, z;
 	int c1 ;
+    int addr, i, j;
 
     while(1)    {
         FlushKeyboard() ;               // dump unread characters from keyboard
@@ -971,6 +1031,77 @@ void menu(void)
 			   say_world();
 			   continue;
         }
+
+        if ( c == (char)('V'))  {
+            printf("\nMemory Change in VGA\n");
+            // while (1) {
+            //     printf("\nAddress: 0x0000 to 0x0FFF");
+            //     addr = Get4HexDigits(0);
+            //     printf("\nData: ");
+            //     data = Get2HexDigits(0);
+            //     writeVGA(addr, data);
+            // }
+            j = 0;
+            z = 0;
+            // 一排80个
+            // 一共40排
+            for (i = 0; i <= 0xFFF; i++) {
+                data = (j + 'A');
+                writeVGA_debug(i, data, z);
+                ++j; ++z;
+                if (z == 8) z = 1;
+                if (j == 26) j = 0;
+                printf("\nAddress: 0x%04X, Data: %c", i, j + 'A');
+                Wait1ms();
+            }
+            continue;
+        }
+
+        if ( c == (char)('M'))  {
+            while (1){
+                *(char *)(VGA_ADDRESS) = 0x41;
+                printf("\nAddress: %ld", VGA_ADDRESS);
+            }
+                
+            continue;
+        }
+
+        // if ( c == (char)('S'))  {
+        //     printf("\nSasha\n");
+        //     say_Sasha();
+        //     cursor_x = cx;
+        //     cursor_y = cy;
+        //     while (1) {
+        //         FlushKeyboard() ;               // dump unread characters from keyboard
+        //         printf("\r\n#") ;
+        //         c = toupper(_getch());
+        //         if (c == (char)('W')) {
+        //             cy -= 1;
+        //             printf("\nMove Up, cy = %d\n", cy);
+        //             cursor_y = cy;
+        //             continue;
+        //         }
+        //         if (c == (char)('S')) {
+        //             cy += 1;
+        //             printf("\nMove Down, cy = %d\n", cy);
+        //             cursor_y = cy;
+        //             continue;
+        //         }
+        //         if (c == (char)('A')) {
+        //             cx -= 1;
+        //             printf("\nMove Left, cx = %d\n", cx);
+        //             cursor_x = cx;
+        //             continue;
+        //         }
+        //         if (c == (char)('D')) {
+        //             cx += 1;
+        //             printf("\nMove Right, cx = %d\n", cx);
+        //             cursor_x = cx;
+        //             continue;
+        //         }
+        //     }
+        //     continue;
+        // }
             UnknownCommand() ;
     }
 }
@@ -1062,10 +1193,11 @@ void main(void)
     char c ;
     int i, j ;
 
-    char *BugMessage = "DE1-68k Bug V1.77\r\nStudent Solution Final Project 2023W2";
+    char *BugMessage = "CPEN 412 2023W2\r\nTom Wang, 76340348";
     char *CopyrightMessage = "Copyright (C) PJ Davies 2016";
 
     KillAllBreakPoints() ;
+
 
     i = x = y = z = PortA_Count = 0;
     Trace = GoFlag = 0;                       // used in tracing/single stepping
@@ -1082,7 +1214,7 @@ void main(void)
     }
 
     Init_RS232() ;     // initialise the RS232 port
-  
+
     for( i = 32; i < 48; i++)
        InstallExceptionHandler(UnhandledTrap, i) ;		        // install Trap exception handler on vector 32-47
 
@@ -1118,5 +1250,4 @@ void main(void)
 
     menu();
 }
-
 

@@ -8,7 +8,9 @@ module AddressDecoder_Verilog (
 		output reg DMASelect_L,
 		output reg GraphicsCS_L,
 		output reg OffBoardMemory_H,
-		output reg CanBusSelect_H
+		output reg CanBusSelect_H,
+		output reg wrencursor,
+		output reg VoiceControl_H
 );
 
 	always@(*) begin
@@ -20,9 +22,11 @@ module AddressDecoder_Verilog (
 		DramSelect_H <= 0 ;
 		IOSelect_H <= 0 ;
 		DMASelect_L <= 1 ;
-		GraphicsCS_L <= 1 ;
+		GraphicsCS_L <= 0 ;
 		OffBoardMemory_H <= 0;
 		CanBusSelect_H <= 0;
+		VoiceControl_H <= 0;
+		wrencursor <= 0;
 		
 		// overriddent value
 	
@@ -45,6 +49,16 @@ module AddressDecoder_Verilog (
 		if (Address[31:26] == 6'b0000_10)	// 0x0800_0000 to 0x0BFF_FFFF
 			DramSelect_H <= 1;
 		
+		// 12 bits assigned to VGA memory
+		if ((Address[31:16] == 16'hFFFF))
+			GraphicsCS_L <= 1;
+
+		if (Address == 32'hFF00_FFFE)
+			VoiceControl_H <= 1;
+		
+		if (Address[31:16] == 16'hFF01)
+			wrencursor <= 1;
+
 		if (Address[31:18] == 14'b1111_0000_0000_00) // 0xF000_0000 to 0xF003_FFFF
 			OnChipRamSelect_H <= 1;
 		

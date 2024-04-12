@@ -1,45 +1,45 @@
 `default_nettype none
 module MC68K(
-input wire	RS232_RxData,
-input wire	CLOCK_50,
-input wire	Reset_L,
-input wire	TraceRequest_L,
-input wire	IRQ2_L,
-input wire	IRQ4_L,
-input wire	[9:0] SW,
-output wire	RS232_TxData,
-output wire	DRAM_CLK,
-output wire	DRAM_CKE,
-output wire	DRAM_CS_N,
-output wire	DRAM_CAS_N,
-output wire	DRAM_RAS_N,
-output wire	DRAM_WE_N,
-output wire	DRAM_UDQM,
-output wire	DRAM_LDQM,
-output wire	CPUClock,
-output wire	Dtack_L,
-output wire	RomSelect_H,
-output wire	RamSelect_H,
-output wire	DramRamSelect_H,
-output wire	IOSelect_H,
-output wire	ResetOut,
-output wire	DramDtack_L,
-output wire	AS_L,
-output wire	UDS_L,
-output wire	RW,
-output wire	[31:0] AddressBus,
-output wire	[15:0] DataBusIn,
-output wire	[15:0] DataBusOut,
-output wire	[12:0] DRAM_ADDR,
-output wire	[1:0] DRAM_BA,
-inout wire	[15:0] DRAM_DQ,
-output wire	[6:0] HEX0,
-output wire	[6:0] HEX1,
-output wire	[6:0] HEX2,
-output wire	[6:0] HEX3,
-output wire	[6:0] HEX4,
-output wire	[6:0] HEX5,
-output wire	[9:0] LEDR,
+input logic	RS232_RxData,
+input logic	CLOCK_50,
+input logic	Reset_L,
+input logic	TraceRequest_L,
+input logic	IRQ2_L,
+input logic	IRQ4_L,
+input logic	[9:0] SW,
+output logic	RS232_TxData,
+output logic	DRAM_CLK,
+output logic	DRAM_CKE,
+output logic	DRAM_CS_N,
+output logic	DRAM_CAS_N,
+output logic	DRAM_RAS_N,
+output logic	DRAM_WE_N,
+output logic	DRAM_UDQM,
+output logic	DRAM_LDQM,
+output logic	CPUClock,
+output logic	Dtack_L,
+output logic	RomSelect_H,
+output logic	RamSelect_H,
+output logic	DramRamSelect_H,
+output logic	IOSelect_H,
+output logic	ResetOut,
+output logic	DramDtack_L,
+output logic	AS_L,
+output logic	UDS_L,
+output logic	RW,
+output logic	[31:0] AddressBus,
+output logic	[15:0] DataBusIn,
+output logic	[15:0] DataBusOut,
+output logic	[12:0] DRAM_ADDR,
+output logic	[1:0] DRAM_BA,
+inout logic	[15:0] DRAM_DQ,
+output logic	[6:0] HEX0,
+output logic	[6:0] HEX1,
+output logic	[6:0] HEX2,
+output logic	[6:0] HEX3,
+output logic	[6:0] HEX4,
+output logic	[6:0] HEX5,
+output logic	[9:0] LEDR,
 
 
 //////////// Audio //////////
@@ -69,54 +69,73 @@ output             VGA_HS,
 output      [7:0]  VGA_R,
 output             VGA_SYNC_N,
 output             VGA_VS
-
-
 );
 
+vga80x40_Altera vga80x40_Altera_1(
+	.wren(update_graphics),
+	.wraddress({CPU_Address[11:1], last_bit}),
+	.wrdata(VGA_DATA),
+	.reset(RESET_H), // Looks like it is active high
+	.clk25MHz(Clock25Mhz),
+	.R(VGA_R),
+	.G(VGA_G),
+	.B(VGA_B),
+	.hsync(VGA_HS), // horizontal sync
+	.vsync(VGA_VS) // vertical sync
+);
+logic update_graphics, last_bit;
+logic [7:0] VGA_DATA;
+assign VGA_CLK = Clock25Mhz;
+// if LDS_L is high, then last bit is 1, otherwise 0
+assign last_bit = LDS_L ? 1'b1 : 1'b0;
+// if last bit is 1, then VGA_DATA is the upper 8 bits of CPU_DataBusOut, otherwise the lower 8 bits
+assign VGA_DATA = last_bit ? CPU_DataBusOut[15:8] : CPU_DataBusOut[7:0];
+assign VGA_BLANK_N = 1'b1;
+assign VGA_SYNC_N = 1'b0;
 
-wire	[31:0] Address;
-wire	Clock25Mhz;
-wire	Clock30Mhz;
-wire	Clock50Mhz;
-wire	Clock50Mhz_Inverted;
-wire	[15:0] DataBusIn_Composite;
-wire	[15:0] DataBusOut_Composite;
-wire	[31:0] DMA_Address;
-wire	DMA_AS_L;
-wire	[15:0] DMA_DataOut;
-wire	DMA_LDS_L;
-wire	DMA_RW;
-wire	DMA_UDS_L;
-wire	[7:0] InPortA;
-wire	[7:0] InPortB;
-wire	[7:0] OutPortB;
-wire	TraceException_H;
-wire	Timer1_IRQ;
-wire	Timer3_IRQ;
-wire	Timer2_IRQ;
-wire	Timer4_IRQ;
-wire	Timer7_IRQ;
-wire	Timer6_IRQ;
-wire	Timer8_IRQ;
-wire	Timer5_IRQ;
-wire	CPU_AS_L;
-wire	CPU_UDS_L;
-wire	CPU_LDS_L;
-wire	CPU_RW;
-wire	[31:0] CPU_Address;
-wire	[15:0] CPU_DataBusOut;
-wire	BR_L;
-wire	[2:0] IPL;
-wire	CanBusSelect_H;
-wire	CanBusDtack_L;
-wire	DataBusIn_OE;
-wire	Trdata_OE;
-wire	TraceIRQ_L;
-wire	ACIA_IRQ;
-wire	OffBoardMemory_H;
-wire	RESET_H;
-wire	BG_L;
-wire	LDS_L;
+logic	[31:0] Address;
+logic	Clock25Mhz;
+logic	Clock30Mhz;
+logic	Clock50Mhz;
+logic	Clock50Mhz_Inverted;
+logic	[15:0] DataBusIn_Composite;
+logic	[15:0] DataBusOut_Composite;
+logic	[31:0] DMA_Address;
+logic	DMA_AS_L;
+logic	[15:0] DMA_DataOut;
+logic	DMA_LDS_L;
+logic	DMA_RW;
+logic	DMA_UDS_L;
+logic	[7:0] InPortA;
+logic	[7:0] InPortB;
+logic	[7:0] OutPortB;
+logic	TraceException_H;
+logic	Timer1_IRQ;
+logic	Timer3_IRQ;
+logic	Timer2_IRQ;
+logic	Timer4_IRQ;
+logic	Timer7_IRQ;
+logic	Timer6_IRQ;
+logic	Timer8_IRQ;
+logic	Timer5_IRQ;
+logic	CPU_AS_L;
+logic	CPU_UDS_L;
+logic	CPU_LDS_L;
+logic	CPU_RW;
+logic	[31:0] CPU_Address;
+logic	[15:0] CPU_DataBusOut;
+logic	BR_L;
+logic	[2:0] IPL;
+logic	CanBusSelect_H;
+logic	CanBusDtack_L;
+logic	DataBusIn_OE;
+logic	Trdata_OE;
+logic	TraceIRQ_L;
+logic	ACIA_IRQ;
+logic	OffBoardMemory_H;
+logic	RESET_H;
+logic	BG_L;
+logic	LDS_L;
 
 logic  ltc2308_start;
 logic  ltc2308_start_raw;
@@ -125,6 +144,9 @@ logic  [5:0] ltc2308_word_to_write_raw;
 logic  [5:0] ltc2308_word_to_write;
 logic  [11:0] ltc2308_parallel_data_read_by_spi_master;
 logic  [1:0]dummy;
+
+
+
 
 OnChipM68xxIO	b2v_inst11(
 	.Clock_50Mhz(Clock50Mhz),
@@ -226,7 +248,7 @@ AddressDecoder_Verilog	b2v_inst20(
 	.DramSelect_H(DramRamSelect_H),
 	.IOSelect_H(IOSelect_H),
 	.DMASelect_L(),
-	.GraphicsCS_L(),
+	.GraphicsCS_L(update_graphics),
 	.OffBoardMemory_H(OffBoardMemory_H),
 	.CanBusSelect_H(CanBusSelect_H));
 
@@ -240,7 +262,7 @@ Dtack_Generator_Verilog	b2v_inst21(
 	.DtackOut_L(Dtack_L));
 
 
-	wire [15:0] tr_data;
+	logic [15:0] tr_data;
 	assign tr_data = Trdata_OE ? DataBusOut_Composite : 16'bzzzz_zzzz_zzzz_zzzz;	
    assign DataBusIn_Composite = DataBusIn_OE ? tr_data : 16'bzzzz_zzzz_zzzz_zzzz;
 	
@@ -394,4 +416,4 @@ I2C_Configure_Audio_Chip(
 
 
 endmodule
-`default_nettype wire
+`default_nettype logic

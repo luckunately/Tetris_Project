@@ -2,32 +2,40 @@
 Timing Analyzer Summary
 ------------------------------------------------------------
 
+Type  : Slow 1100mV 85C Model Setup 'clk_vga'
+Slack : -11.724
+TNS   : -277.198
+
 Type  : Slow 1100mV 85C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
-Slack : -7.222
-TNS   : -110.667
+Slack : -7.006
+TNS   : -106.617
 
 Type  : Slow 1100mV 85C Model Setup 'b2v_inst7|clockgen_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -6.068
-TNS   : -33.361
+Slack : -5.948
+TNS   : -33.221
 
 Type  : Slow 1100mV 85C Model Setup 'clk_dram'
-Slack : -5.505
-TNS   : -9.804
+Slack : -5.557
+TNS   : -9.782
 
 Type  : Slow 1100mV 85C Model Setup 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 1.465
+Slack : 1.468
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Setup 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 4.489
+Slack : 3.968
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Setup 'CLOCK_50'
+Slack : 4.540
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 16.511
+Slack : 16.260
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
-Slack : 16.982
+Slack : 17.033
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Setup 'altera_reserved_tck'
@@ -35,99 +43,107 @@ Slack : 22.370
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Setup 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
-Slack : 31.315
+Slack : 31.110
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Setup 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
-Slack : 34.235
+Slack : 33.974
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 35.916
+Slack : 35.815
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -0.836
-TNS   : -0.836
+Slack : -0.869
+TNS   : -1.687
 
 Type  : Slow 1100mV 85C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -0.504
-TNS   : -32.088
+Slack : -0.503
+TNS   : -32.045
 
 Type  : Slow 1100mV 85C Model Hold 'altera_reserved_tck'
-Slack : -0.042
-TNS   : -0.042
+Slack : -0.091
+TNS   : -0.091
+
+Type  : Slow 1100mV 85C Model Hold 'CLOCK_50'
+Slack : -0.019
+TNS   : -0.030
 
 Type  : Slow 1100mV 85C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 0.297
-TNS   : 0.000
-
-Type  : Slow 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 0.602
+Slack : 0.330
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
-Slack : 0.668
+Slack : 0.476
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
-Slack : 0.791
-TNS   : 0.000
-
-Type  : Slow 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 0.836
+Type  : Slow 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
+Slack : 0.606
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
-Slack : 0.850
+Slack : 0.740
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
+Slack : 0.780
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
+Slack : 0.805
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
-Slack : 5.290
+Slack : 5.068
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Hold 'clk_vga'
+Slack : 8.175
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'clk_dram'
-Slack : 9.423
+Slack : 9.583
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Recovery 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : -7.879
-TNS   : -47.268
+Slack : -7.745
+TNS   : -54.215
 
 Type  : Slow 1100mV 85C Model Recovery 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
-Slack : -7.703
-TNS   : -14.675
+Slack : -7.498
+TNS   : -14.312
 
 Type  : Slow 1100mV 85C Model Recovery 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : -6.940
-TNS   : -97.120
+Slack : -6.926
+TNS   : -103.845
 
 Type  : Slow 1100mV 85C Model Recovery 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 35.503
+Slack : 35.764
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Recovery 'altera_reserved_tck'
-Slack : 59.556
+Slack : 57.580
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Removal 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 0.579
+Slack : 0.487
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Removal 'altera_reserved_tck'
-Slack : 0.965
-TNS   : 0.000
-
-Type  : Slow 1100mV 85C Model Removal 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 5.585
+Slack : 0.786
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Removal 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
-Slack : 5.691
+Slack : 5.514
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Removal 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
+Slack : 5.611
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Removal 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 6.433
+Slack : 6.310
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]'
@@ -135,7 +151,7 @@ Slack : 0.974
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 7.373
+Slack : 7.379
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
@@ -143,71 +159,79 @@ Slack : 7.726
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'CLOCK_50'
-Slack : 9.259
+Slack : 8.304
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
 Slack : 17.379
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
-Slack : 18.394
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
+Slack : 18.386
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
-Slack : 18.539
-TNS   : 0.000
-
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
-Slack : 18.541
+Slack : 18.441
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
 Slack : 18.543
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
-Slack : 18.582
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
+Slack : 18.561
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
-Slack : 18.614
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
+Slack : 18.586
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
+Slack : 18.629
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 18.624
+Slack : 18.667
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'altera_reserved_tck'
-Slack : 29.311
+Slack : 29.267
 TNS   : 0.000
 
+Type  : Slow 1100mV 0C Model Setup 'clk_vga'
+Slack : -11.505
+TNS   : -271.901
+
 Type  : Slow 1100mV 0C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
-Slack : -7.255
-TNS   : -111.327
+Slack : -7.026
+TNS   : -107.092
 
 Type  : Slow 1100mV 0C Model Setup 'b2v_inst7|clockgen_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -5.467
-TNS   : -29.468
+Slack : -5.365
+TNS   : -29.578
 
 Type  : Slow 1100mV 0C Model Setup 'clk_dram'
-Slack : -5.113
-TNS   : -9.028
+Slack : -5.099
+TNS   : -8.911
 
 Type  : Slow 1100mV 0C Model Setup 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 1.787
+Slack : 1.659
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 4.654
+Slack : 4.130
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Setup 'CLOCK_50'
+Slack : 4.911
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 16.583
+Slack : 16.271
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
-Slack : 16.916
+Slack : 17.015
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'altera_reserved_tck'
@@ -215,99 +239,107 @@ Slack : 22.552
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
-Slack : 31.429
+Slack : 31.293
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
-Slack : 34.314
+Slack : 34.009
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 35.948
+Slack : 35.876
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -0.714
-TNS   : -0.714
+Slack : -0.750
+TNS   : -1.448
 
 Type  : Slow 1100mV 0C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -0.392
-TNS   : -24.898
+Slack : -0.391
+TNS   : -24.862
 
 Type  : Slow 1100mV 0C Model Hold 'altera_reserved_tck'
-Slack : -0.041
-TNS   : -0.041
+Slack : -0.088
+TNS   : -0.088
 
-Type  : Slow 1100mV 0C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 0.322
+Type  : Slow 1100mV 0C Model Hold 'CLOCK_50'
+Slack : 0.003
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 0.590
+Type  : Slow 1100mV 0C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
+Slack : 0.359
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
-Slack : 0.633
+Slack : 0.441
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
+Slack : 0.591
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
-Slack : 0.716
-TNS   : 0.000
-
-Type  : Slow 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 0.894
+Slack : 0.772
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
-Slack : 0.944
+Slack : 0.785
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
+Slack : 0.871
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
-Slack : 5.425
+Slack : 5.193
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Hold 'clk_vga'
+Slack : 8.046
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'clk_dram'
-Slack : 9.167
+Slack : 9.258
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Recovery 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : -7.882
-TNS   : -47.270
+Slack : -7.733
+TNS   : -54.119
 
 Type  : Slow 1100mV 0C Model Recovery 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
-Slack : -7.645
-TNS   : -14.569
+Slack : -7.366
+TNS   : -14.146
 
 Type  : Slow 1100mV 0C Model Recovery 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : -6.968
-TNS   : -97.517
+Slack : -6.926
+TNS   : -103.843
 
 Type  : Slow 1100mV 0C Model Recovery 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 35.810
+Slack : 35.974
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Recovery 'altera_reserved_tck'
-Slack : 59.679
+Slack : 57.810
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Removal 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 0.526
+Slack : 0.539
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Removal 'altera_reserved_tck'
-Slack : 0.930
-TNS   : 0.000
-
-Type  : Slow 1100mV 0C Model Removal 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 5.693
+Slack : 0.752
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Removal 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
-Slack : 5.779
+Slack : 5.629
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Removal 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
+Slack : 5.691
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Removal 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 6.561
+Slack : 6.433
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]'
@@ -315,79 +347,87 @@ Slack : 1.048
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 7.436
+Slack : 7.439
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 7.865
+Slack : 7.866
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'CLOCK_50'
-Slack : 9.293
+Slack : 8.346
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
 Slack : 17.453
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
-Slack : 18.420
-TNS   : 0.000
-
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
-Slack : 18.510
-TNS   : 0.000
-
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
-Slack : 18.510
+Slack : 18.483
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 18.522
-TNS   : 0.000
-
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
-Slack : 18.618
+Slack : 18.524
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
-Slack : 18.630
+Slack : 18.565
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
+Slack : 18.595
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
+Slack : 18.597
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
+Slack : 18.636
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 18.638
+Slack : 18.680
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'altera_reserved_tck'
-Slack : 29.309
+Slack : 29.279
 TNS   : 0.000
 
+Type  : Fast 1100mV 85C Model Setup 'clk_vga'
+Slack : -7.081
+TNS   : -167.345
+
 Type  : Fast 1100mV 85C Model Setup 'b2v_inst7|clockgen_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -5.059
-TNS   : -27.582
+Slack : -4.892
+TNS   : -27.606
 
 Type  : Fast 1100mV 85C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
-Slack : -3.658
-TNS   : -55.532
+Slack : -3.529
+TNS   : -53.191
 
 Type  : Fast 1100mV 85C Model Setup 'clk_dram'
-Slack : 0.215
+Slack : 0.232
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 4.708
+Slack : 5.092
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 6.916
+Slack : 6.786
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Setup 'CLOCK_50'
+Slack : 10.367
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 17.032
+Slack : 17.070
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
-Slack : 17.836
+Slack : 17.946
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'altera_reserved_tck'
@@ -395,179 +435,195 @@ Slack : 24.519
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
-Slack : 34.162
+Slack : 33.988
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
-Slack : 35.938
+Slack : 35.841
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 37.058
+Slack : 36.952
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -0.361
-TNS   : -0.361
+Slack : -0.382
+TNS   : -0.726
 
 Type  : Fast 1100mV 85C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk'
 Slack : -0.156
-TNS   : -9.913
+TNS   : -9.877
 
 Type  : Fast 1100mV 85C Model Hold 'altera_reserved_tck'
-Slack : -0.063
-TNS   : -0.064
+Slack : -0.083
+TNS   : -0.094
 
-Type  : Fast 1100mV 85C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 0.236
-TNS   : 0.000
+Type  : Fast 1100mV 85C Model Hold 'CLOCK_50'
+Slack : -0.044
+TNS   : -0.127
 
 Type  : Fast 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 0.289
+Slack : 0.204
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
+Slack : 0.237
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Hold 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
-Slack : 0.310
-TNS   : 0.000
-
-Type  : Fast 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
-Slack : 0.401
-TNS   : 0.000
-
-Type  : Fast 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 0.414
+Slack : 0.243
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
-Slack : 0.442
+Slack : 0.320
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
+Slack : 0.364
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
+Slack : 0.373
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
-Slack : 2.789
+Slack : 2.677
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Hold 'clk_vga'
+Slack : 4.274
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Hold 'clk_dram'
-Slack : 5.312
+Slack : 5.409
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Recovery 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : -4.187
-TNS   : -25.118
+Slack : -4.113
+TNS   : -28.791
 
 Type  : Fast 1100mV 85C Model Recovery 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
-Slack : -4.023
-TNS   : -7.441
+Slack : -3.888
+TNS   : -7.206
 
 Type  : Fast 1100mV 85C Model Recovery 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : -3.441
-TNS   : -48.165
+Slack : -3.438
+TNS   : -51.558
 
 Type  : Fast 1100mV 85C Model Recovery 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 37.235
+Slack : 37.335
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Recovery 'altera_reserved_tck'
-Slack : 60.530
-TNS   : 0.000
-
-Type  : Fast 1100mV 85C Model Removal 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 0.420
+Slack : 59.021
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Removal 'altera_reserved_tck'
-Slack : 0.508
+Slack : 0.399
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Removal 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 2.943
+Type  : Fast 1100mV 85C Model Removal 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
+Slack : 0.410
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Removal 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
-Slack : 3.058
+Slack : 2.953
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Removal 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
+Slack : 2.956
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Removal 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 3.685
+Slack : 3.615
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]'
 Slack : 1.314
 TNS   : 0.000
 
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'CLOCK_50'
+Slack : 8.179
+TNS   : 0.000
+
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 8.200
+Slack : 8.205
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 8.867
-TNS   : 0.000
-
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'CLOCK_50'
-Slack : 9.150
+Slack : 8.868
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
 Slack : 18.168
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
-Slack : 18.722
-TNS   : 0.000
-
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
-Slack : 18.884
-TNS   : 0.000
-
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
-Slack : 18.903
+Slack : 18.870
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 18.912
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
+Slack : 18.875
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
-Slack : 18.920
-TNS   : 0.000
-
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
-Slack : 18.921
+Slack : 18.895
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
 Slack : 18.929
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'altera_reserved_tck'
-Slack : 29.143
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
+Slack : 18.931
 TNS   : 0.000
 
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
+Slack : 18.942
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
+Slack : 18.944
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'altera_reserved_tck'
+Slack : 29.151
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Setup 'clk_vga'
+Slack : -6.755
+TNS   : -159.121
+
 Type  : Fast 1100mV 0C Model Setup 'b2v_inst7|clockgen_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -4.000
-TNS   : -21.454
+Slack : -3.873
+TNS   : -21.495
 
 Type  : Fast 1100mV 0C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
-Slack : -3.551
-TNS   : -54.130
+Slack : -3.429
+TNS   : -51.923
 
 Type  : Fast 1100mV 0C Model Setup 'clk_dram'
-Slack : 0.662
+Slack : 0.670
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 5.284
+Slack : 5.543
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 7.212
+Slack : 7.008
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Setup 'CLOCK_50'
+Slack : 11.238
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 17.300
+Slack : 17.294
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
-Slack : 17.953
+Slack : 18.038
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'altera_reserved_tck'
@@ -575,142 +631,150 @@ Slack : 24.766
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
-Slack : 34.607
+Slack : 34.486
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
-Slack : 36.210
+Slack : 36.111
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 37.196
+Slack : 37.103
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : -0.333
-TNS   : -0.333
+Slack : -0.352
+TNS   : -0.671
 
 Type  : Fast 1100mV 0C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk'
 Slack : -0.134
-TNS   : -8.524
+TNS   : -8.497
 
 Type  : Fast 1100mV 0C Model Hold 'altera_reserved_tck'
-Slack : -0.069
-TNS   : -0.088
+Slack : -0.087
+TNS   : -0.105
 
-Type  : Fast 1100mV 0C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 0.191
-TNS   : 0.000
+Type  : Fast 1100mV 0C Model Hold 'CLOCK_50'
+Slack : -0.053
+TNS   : -0.183
 
 Type  : Fast 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 0.231
+Slack : 0.153
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Hold 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
+Slack : 0.200
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
-Slack : 0.282
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
-Slack : 0.350
+Slack : 0.219
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
-Slack : 0.380
+Slack : 0.278
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
+Slack : 0.340
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 0.390
+Slack : 0.365
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
-Slack : 2.758
+Slack : 2.655
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Hold 'clk_vga'
+Slack : 3.964
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'clk_dram'
-Slack : 4.942
+Slack : 5.023
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Recovery 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : -4.050
-TNS   : -24.296
+Slack : -3.976
+TNS   : -27.829
 
 Type  : Fast 1100mV 0C Model Recovery 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
-Slack : -3.877
-TNS   : -7.181
+Slack : -3.756
+TNS   : -6.967
 
 Type  : Fast 1100mV 0C Model Recovery 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : -3.348
-TNS   : -46.857
+Slack : -3.337
+TNS   : -50.043
 
 Type  : Fast 1100mV 0C Model Recovery 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 37.530
+Slack : 37.637
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Recovery 'altera_reserved_tck'
-Slack : 60.709
+Slack : 59.406
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Removal 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 0.347
+Slack : 0.350
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Removal 'altera_reserved_tck'
-Slack : 0.448
+Slack : 0.354
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Removal 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 2.894
+Slack : 2.899
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Removal 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
-Slack : 2.998
+Slack : 2.906
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Removal 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|oAUD_BCK'
-Slack : 3.603
+Slack : 3.535
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]'
 Slack : 1.341
 TNS   : 0.000
 
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'CLOCK_50'
+Slack : 8.135
+TNS   : 0.000
+
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk'
-Slack : 8.233
+Slack : 8.236
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[3].gpll~PLL_OUTPUT_COUNTER|divclk'
 Slack : 8.914
 TNS   : 0.000
 
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'CLOCK_50'
-Slack : 9.112
-TNS   : 0.000
-
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'b2v_inst7|clockgen_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk'
 Slack : 18.198
 TNS   : 0.000
 
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
-Slack : 18.782
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
-Slack : 18.919
-TNS   : 0.000
-
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|audio_clock:u4|LRCK_1X'
-Slack : 18.928
+Slack : 18.896
 TNS   : 0.000
 
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
-Slack : 18.936
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
-Slack : 18.964
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|read_address_range:Control_flash_reader|state[5]'
+Slack : 18.903
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_reg_top|outdata[0]'
+Slack : 18.936
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'I2C_AV_Config:I2C_Configure_Audio_Chip|mI2C_CTRL_CLK'
+Slack : 18.958
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|audio_controller:audio_control|TFF_power_of_2_division_counter_with_auto_phase_inversion:generate_aud_ctrl_clk|widereg:div_regs_gen[1].div_reg|outdata[0]'
+Slack : 18.960
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'speech_subsystem:speech_subsystem_inst|Generate_Arbitrary_Divided_Clk32:Generate_Flash_Test_Audio_Clk_inst|var_clk_div32:Div_Clk|tc_reg'
 Slack : 18.964
 TNS   : 0.000
 
@@ -719,7 +783,7 @@ Slack : 18.970
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'altera_reserved_tck'
-Slack : 29.144
+Slack : 29.146
 TNS   : 0.000
 
 ------------------------------------------------------------

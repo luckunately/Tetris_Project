@@ -4,7 +4,8 @@ module Dtack_Generator_Verilog (
 	   input DramDtack_L,			// from Dram controller
 		input CanBusSelect_H,		// from address decoder
 		input CanBusDtack_L, 		// from Canbus controllers
-		
+		input VoiceControl_H, 	// from Voice controller
+		input VoiceDtack_L,
 	   output reg DtackOut_L 		// to CPU
 		
 	);
@@ -46,6 +47,8 @@ module Dtack_Generator_Verilog (
 				DtackOut_L <= DramDtack_L;
 			else if(CanBusSelect_H == 1)					// if canbus is being selected and for example it needed wait states
 				DtackOut_L <= CanBusDtack_L;		// copy the dtack signal from the can controller and give this as the dtack to the 68k
+			else if(VoiceControl_H == 1)
+				DtackOut_L <= VoiceDtack_L;
 		end
 	end
 endmodule

@@ -19,6 +19,13 @@
 #define GREEN_COLOR  (0x2)
 #define BLUE_COLOR   (0x1)
 #define TETRIS_COLOR (GREEN_COLOR)
-
+#define cursor_x *(char*)(0xFF010000)
+#define cursor_x1 *(char*)(0xFF010001)
+#define cursor_y *(char*)(0xFF010002)
+#define cursor_y1 *(char*)(0xFF010003)
+#define screen_width 80
+#define screen_height 40
+#define VGA_ADDRESS 0xFFFF0000 
+#define voice *(char*)(0xFF00FFFE)
 
 #endif
