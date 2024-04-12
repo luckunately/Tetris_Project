@@ -3,11 +3,13 @@ module Speech_Controller (
     clk,
     phoneme_speech_busy,
     input logic VoiceControl_H,
+    output logic sub_clk,
     input logic [15:0] data,
     output logic [7:0] phoneme_sel,
     output logic phoneme_speech_finish, start_phoneme_output, VoiceDtack_L
 );
 
+  assign sub_clk = gotMission ? clk : 1'b0;
   enum logic [7:0] {
     Idel = 8'h00,
     BackToWork = 8'h01,

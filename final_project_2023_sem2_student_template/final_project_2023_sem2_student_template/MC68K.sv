@@ -408,6 +408,7 @@ logic VoiceControl_H;
 Speech_Controller speech(
 	.rst(Reset_L),
 	.clk(Clock50Mhz),
+	.sub_clk(sub_clk),
 	.phoneme_speech_finish(phoneme_speech_finish),
 	.phoneme_speech_busy(phoneme_speech_busy),
 	.VoiceControl_H(VoiceControl_H),
@@ -418,13 +419,13 @@ Speech_Controller speech(
 	);
 
 
- 
+ logic sub_clk;
 
 speech_subsystem
 speech_subsystem_inst(
 
     //////////// CLOCK //////////
-    .CLOCK_50(Clock50Mhz),
+    .CLOCK_50(sub_clk),
 
     //////////// LED //////////
     .LEDR(LEDR),

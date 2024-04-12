@@ -131,13 +131,6 @@ void clear_screen()
 	for (i = 0; i <= 3200; i++) {
 		changeChar(i, ' ');
 	}
-	// int iiii, jjjjj;
-	// for(iiii = 0; iiii < screen_height; iiii++){
-	// 	for(jjjjj = 0; jjjjj < screen_width; jjjjj++){
-	// 		printf("i: %d, j: %d\n", iiii, jjjjj);
-	// 		updateVGA(jjjjj, iiii, 'C', 4);
-	// 	}
-	// }
 };
 
 void say_game_over() {
