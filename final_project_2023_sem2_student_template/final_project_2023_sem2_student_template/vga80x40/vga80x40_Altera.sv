@@ -36,13 +36,20 @@ module vga80x40_Altera (
         R = {out_R, out_R, out_R, out_R, out_R, out_R, out_R, out_R};
         G = {out_G, out_G, out_G, out_G, out_G, out_G, out_G, out_G};
         B = {out_B, out_B, out_B, out_B, out_B, out_B, out_B, out_B};
-        if (start == 8'h1) 
+        if (start == 8'h1) begin
             intoit = 8'hF2;
-        else
-            intoit = ram_clor; // octl[7:3]   
+            default_x = 8'd40;
+            default_y = 8'd20;
+        end
+        else begin
+            intoit = {1'b1, ram_clor[6:0]}; // octl[7:3]   
+            default_x = mem_ocrx;
+            default_y = mem_ocry;
+        end
     end
  
     logic [7:0]intoit;
+    logic [7:0]defult_x, defult_y;
     vga80x40 vga80x40 (
         .reset(reset),
         .clk25MHz(clk25MHz),
@@ -55,11 +62,12 @@ module vga80x40_Altera (
         .TEXT_D(ram_doB),
         .FONT_A(rom_adB),
         .FONT_D(rom_doB),
-        .ocrx(mem_ocrx),
-        .ocry(mem_ocry),
+        .ocrx(default_x),
+        .ocry(default_y),
         .octl(intoit) // 8'b11110010
     );
-
+    logic [11:0] address_shift;
+    assign address_shift = ram_adB - 1;
     mem_init U_TEXT (
         .rdaddress(ram_adB),
         .q(ram_doB),
@@ -71,7 +79,7 @@ module vga80x40_Altera (
 
     logic [7:0] ram_clor;
     mem_color U_COLOR (
-        .rdaddress(ram_adB),
+        .rdaddress(address_shift),
         .q(ram_clor),
         .clock(clk25MHz),
         .wren(wrencolor),

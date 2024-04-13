@@ -406,9 +406,9 @@ logic VoiceControl_H;
 // .start_phoneme_output (start_phoneme_output )
 // );
 Speech_Controller speech(
-	.rst(Reset_L),
+	.rst(RESET_H),
 	.clk(Clock50Mhz),
-	.sub_clk(sub_clk),
+	// .sub_clk(sub_clk),
 	.phoneme_speech_finish(phoneme_speech_finish),
 	.phoneme_speech_busy(phoneme_speech_busy),
 	.VoiceControl_H(VoiceControl_H),
@@ -423,13 +423,10 @@ Speech_Controller speech(
 
 speech_subsystem
 speech_subsystem_inst(
-
     //////////// CLOCK //////////
-    .CLOCK_50(sub_clk),
-
+    .CLOCK_50(Clock50Mhz),
     //////////// LED //////////
     .LEDR(LEDR),
-
     //////////// Audio //////////
     .AUD_ADCDAT(AUD_ADCDAT),
     .AUD_ADCLRCK(AUD_ADCLRCK),
@@ -437,10 +434,9 @@ speech_subsystem_inst(
     .AUD_DACDAT(AUD_DACDAT),
     .AUD_DACLRCK(AUD_DACLRCK),
     .AUD_XCK(AUD_XCK),
-
     //////// PS2 //////////
     .phoneme_speech_busy(phoneme_speech_busy),  
-	.phoneme_speech_finish(1'b1),
+	.phoneme_speech_finish(phoneme_speech_finish),
 	.phoneme_sel(phoneme_sel),          
 	.start_phoneme_output(start_phoneme_output)	
 );

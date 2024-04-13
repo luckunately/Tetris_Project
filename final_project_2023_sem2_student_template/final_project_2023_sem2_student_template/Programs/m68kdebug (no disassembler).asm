@@ -9,6 +9,8 @@
 ; //#define TopOfStack 0x0C000000
 ; #define voice *(char*)(0xFF00FFFE)
 ; #define VGA_ADDRESS 0xFFFF0000 
+; #define octlAddress1 *(char *)(0xFF030001)
+; #define octlAddress *(char *)(0xFF030000)
 ; /* DO NOT INITIALISE GLOBAL VARIABLES - DO IT in MAIN() */
 ; unsigned int i, x, y, z, PortA_Count;
 ; int     Trace, GoFlag, Echo;                       // used in tracing/single stepping
@@ -3483,6 +3485,10 @@ main_6:
        pea       @m68kde~1_111.L
        jsr       _printf
        addq.w    #8,A7
+; // update_cursor(40, 20);
+; // octlAddress = 0xF2;
+; // octlAddress1 = 0xF2;
+; // changeChar(20 * 80 + 39, ' ');
 ; menu();
        jsr       _menu
        movem.l   (A7)+,D2/A2

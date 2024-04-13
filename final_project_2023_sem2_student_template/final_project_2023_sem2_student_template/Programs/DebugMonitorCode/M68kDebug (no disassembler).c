@@ -11,7 +11,8 @@
 
 #define voice *(char*)(0xFF00FFFE)
 #define VGA_ADDRESS 0xFFFF0000 
-
+#define octlAddress1 *(char *)(0xFF030001)
+#define octlAddress *(char *)(0xFF030000)
 /* DO NOT INITIALISE GLOBAL VARIABLES - DO IT in MAIN() */
 
 unsigned int i, x, y, z, PortA_Count;
@@ -1247,7 +1248,10 @@ void main(void)
 
     printf("\r\n%s", BugMessage) ;
     printf("\r\n%s", CopyrightMessage) ;
-
+    // update_cursor(40, 20);
+    // octlAddress = 0xF2;
+    // octlAddress1 = 0xF2;
+    // changeChar(20 * 80 + 39, ' ');
     menu();
 }
 
