@@ -2936,8 +2936,8 @@ _writeVGA_debug:
 ; {
        xdef      _menu
 _menu:
-       link      A6,#-12
-       movem.l   D2/D3/D4/D5/A2,-(A7)
+       link      A6,#-20
+       movem.l   D2/A2,-(A7)
        lea       _printf.L,A2
 ; char c, data, z;
 ; int c1 ;
@@ -2958,9 +2958,9 @@ menu_1:
        move.l    D1,-(A7)
        jsr       _toupper
        addq.w    #4,A7
-       move.b    D0,D5
+       move.b    D0,D2
 ; if ( c == (char)('T'))  {
-       cmp.b     #84,D5
+       cmp.b     #84,D2
        bne.s     menu_4
 ; printf("\nRunning Tetris Game\n");
        pea       @m68kde~1_90.L
@@ -2969,11 +2969,11 @@ menu_1:
 ; tetris_main();
        jsr       _tetris_main
 ; continue;
-       bra       menu_2
+       bra.s     menu_2
 menu_4:
 ; }
 ; if ( c == (char)('H'))  {
-       cmp.b     #72,D5
+       cmp.b     #72,D2
        bne.s     menu_6
 ; printf("\nSaying Hello World\n");
        pea       @m68kde~1_91.L
@@ -2984,80 +2984,33 @@ menu_4:
 ; say_world();
        jsr       _say_world
 ; continue;
-       bra       menu_2
+       bra.s     menu_2
 menu_6:
 ; }
-; if ( c == (char)('V'))  {
-       cmp.b     #86,D5
-       bne       menu_8
-; printf("\nMemory Change in VGA\n");
-       pea       @m68kde~1_92.L
-       jsr       (A2)
-       addq.w    #4,A7
-; // while (1) {
-; //     printf("\nAddress: 0x0000 to 0x0FFF");
-; //     addr = Get4HexDigits(0);
-; //     printf("\nData: ");
-; //     data = Get2HexDigits(0);
-; //     writeVGA(addr, data);
+; // if ( c == (char)('V'))  {
+; //     printf("\nMemory Change in VGA\n");
+; //     // while (1) {
+; //     //     printf("\nAddress: 0x0000 to 0x0FFF");
+; //     //     addr = Get4HexDigits(0);
+; //     //     printf("\nData: ");
+; //     //     data = Get2HexDigits(0);
+; //     //     writeVGA(addr, data);
+; //     // }
+; //     j = 0;
+; //     z = 0;
+; //     // 一排80个
+; //     // 一共40排
+; //     for (i = 0; i <= 0xFFFF; i++) {
+; //         data = (j + 'A');
+; //         writeVGA_debug(i, data, z);
+; //         ++j; ++z;
+; //         if (z == 8) z = 1;
+; //         if (j == 26) j = 0;
+; //         printf("\nAddress: 0x%04X, Data: %c", i, j + 'A');
+; //         Wait1ms();
+; //     }
+; //     continue;
 ; // }
-; j = 0;
-       clr.l     D2
-; z = 0;
-       clr.b     D4
-; // 一排80个
-; // 一共40排
-; for (i = 0; i <= 0xFFFF; i++) {
-       clr.l     D3
-menu_10:
-       cmp.l     #65535,D3
-       bhi       menu_12
-; data = (j + 'A');
-       move.l    D2,D0
-       add.l     #65,D0
-       move.b    D0,-9(A6)
-; writeVGA_debug(i, data, z);
-       ext.w     D4
-       ext.l     D4
-       move.l    D4,-(A7)
-       move.b    -9(A6),D1
-       ext.w     D1
-       ext.l     D1
-       move.l    D1,-(A7)
-       move.l    D3,-(A7)
-       jsr       _writeVGA_debug
-       add.w     #12,A7
-; ++j; ++z;
-       addq.l    #1,D2
-       addq.b    #1,D4
-; if (z == 8) z = 1;
-       cmp.b     #8,D4
-       bne.s     menu_13
-       moveq     #1,D4
-menu_13:
-; if (j == 26) j = 0;
-       cmp.l     #26,D2
-       bne.s     menu_15
-       clr.l     D2
-menu_15:
-; printf("\nAddress: 0x%04X, Data: %c", i, j + 'A');
-       move.l    D2,D1
-       add.l     #65,D1
-       move.l    D1,-(A7)
-       move.l    D3,-(A7)
-       pea       @m68kde~1_93.L
-       jsr       (A2)
-       add.w     #12,A7
-; Wait1ms();
-       jsr       _Wait1ms
-       addq.l    #1,D3
-       bra       menu_10
-menu_12:
-; }
-; continue;
-       bra.s     menu_2
-menu_8:
-; }
 ; // if ( c == (char)('M'))  {
 ; //     while (1){
 ; //         *(char *)(VGA_ADDRESS) = 0x41;
@@ -3112,12 +3065,12 @@ menu_2:
 _PrintErrorMessageandAbort:
        link      A6,#0
 ; printf("\r\n\r\nProgram ABORT !!!!!!\r\n") ;
-       pea       @m68kde~1_94.L
+       pea       @m68kde~1_92.L
        jsr       _printf
        addq.w    #4,A7
 ; printf("%s\r\n", string) ;
        move.l    8(A6),-(A7)
-       pea       @m68kde~1_95.L
+       pea       @m68kde~1_93.L
        jsr       _printf
        addq.w    #8,A7
 ; menu() ;
@@ -3130,12 +3083,12 @@ _PrintErrorMessageandAbort:
 _IRQMessage:
        link      A6,#0
 ; printf("\r\n\r\nProgram ABORT !!!!!");
-       pea       @m68kde~1_96.L
+       pea       @m68kde~1_94.L
        jsr       _printf
        addq.w    #4,A7
 ; printf("\r\nUnhandled Interrupt: IRQ%d !!!!!", level) ;
        move.l    8(A6),-(A7)
-       pea       @m68kde~1_97.L
+       pea       @m68kde~1_95.L
        jsr       _printf
        addq.w    #8,A7
 ; menu() ;
@@ -3192,7 +3145,7 @@ _UnhandledIRQ5:
        xdef      _UnhandledIRQ6
 _UnhandledIRQ6:
 ; PrintErrorMessageandAbort("ADDRESS ERROR: 16 or 32 Bit Transfer to/from an ODD Address....") ;
-       pea       @m68kde~1_98.L
+       pea       @m68kde~1_96.L
        jsr       _PrintErrorMessageandAbort
        addq.w    #4,A7
 ; menu() ;
@@ -3212,7 +3165,7 @@ _UnhandledIRQ7:
        xdef      _UnhandledTrap
 _UnhandledTrap:
 ; PrintErrorMessageandAbort("Unhandled Trap !!!!!") ;
-       pea       @m68kde~1_99.L
+       pea       @m68kde~1_97.L
        jsr       _PrintErrorMessageandAbort
        addq.w    #4,A7
        rts
@@ -3221,7 +3174,7 @@ _UnhandledTrap:
        xdef      _BusError
 _BusError:
 ; PrintErrorMessageandAbort("BUS Error!") ;
-       pea       @m68kde~1_100.L
+       pea       @m68kde~1_98.L
        jsr       _PrintErrorMessageandAbort
        addq.w    #4,A7
        rts
@@ -3230,7 +3183,7 @@ _BusError:
        xdef      _AddressError
 _AddressError:
 ; PrintErrorMessageandAbort("ADDRESS Error!") ;
-       pea       @m68kde~1_101.L
+       pea       @m68kde~1_99.L
        jsr       _PrintErrorMessageandAbort
        addq.w    #4,A7
        rts
@@ -3239,7 +3192,7 @@ _AddressError:
        xdef      _IllegalInstruction
 _IllegalInstruction:
 ; PrintErrorMessageandAbort("ILLEGAL INSTRUCTION") ;
-       pea       @m68kde~1_102.L
+       pea       @m68kde~1_100.L
        jsr       _PrintErrorMessageandAbort
        addq.w    #4,A7
        rts
@@ -3248,7 +3201,7 @@ _IllegalInstruction:
        xdef      _Dividebyzero
 _Dividebyzero:
 ; PrintErrorMessageandAbort("DIVIDE BY ZERO") ;
-       pea       @m68kde~1_103.L
+       pea       @m68kde~1_101.L
        jsr       _PrintErrorMessageandAbort
        addq.w    #4,A7
        rts
@@ -3257,7 +3210,7 @@ _Dividebyzero:
        xdef      _Check
 _Check:
 ; PrintErrorMessageandAbort("'CHK' INSTRUCTION") ;
-       pea       @m68kde~1_104.L
+       pea       @m68kde~1_102.L
        jsr       _PrintErrorMessageandAbort
        addq.w    #4,A7
        rts
@@ -3266,7 +3219,7 @@ _Check:
        xdef      _Trapv
 _Trapv:
 ; PrintErrorMessageandAbort("TRAPV INSTRUCTION") ;
-       pea       @m68kde~1_105.L
+       pea       @m68kde~1_103.L
        jsr       _PrintErrorMessageandAbort
        addq.w    #4,A7
        rts
@@ -3275,7 +3228,7 @@ _Trapv:
        xdef      _PrivError
 _PrivError:
 ; PrintErrorMessageandAbort("PRIVILEGE VIOLATION") ;
-       pea       @m68kde~1_106.L
+       pea       @m68kde~1_104.L
        jsr       _PrintErrorMessageandAbort
        addq.w    #4,A7
        rts
@@ -3284,7 +3237,7 @@ _PrivError:
        xdef      _UnitIRQ
 _UnitIRQ:
 ; PrintErrorMessageandAbort("UNINITIALISED IRQ") ;
-       pea       @m68kde~1_107.L
+       pea       @m68kde~1_105.L
        jsr       _PrintErrorMessageandAbort
        addq.w    #4,A7
        rts
@@ -3293,7 +3246,7 @@ _UnitIRQ:
        xdef      _Spurious
 _Spurious:
 ; PrintErrorMessageandAbort("SPURIOUS IRQ") ;
-       pea       @m68kde~1_108.L
+       pea       @m68kde~1_106.L
        jsr       _PrintErrorMessageandAbort
        addq.w    #4,A7
        rts
@@ -3308,10 +3261,10 @@ _main:
 ; char c ;
 ; int i, j ;
 ; char *BugMessage = "CPEN 412 2023W2\r\nTom Wang, 76340348";
-       lea       @m68kde~1_109.L,A0
+       lea       @m68kde~1_107.L,A0
        move.l    A0,-8(A6)
 ; char *CopyrightMessage = "Copyright (C) PJ Davies 2016";
-       lea       @m68kde~1_110.L,A0
+       lea       @m68kde~1_108.L,A0
        move.l    A0,-4(A6)
 ; KillAllBreakPoints() ;
        jsr       _KillAllBreakPoints
@@ -3477,18 +3430,18 @@ main_6:
        clr.b     4194314
 ; printf("\r\n%s", BugMessage) ;
        move.l    -8(A6),-(A7)
-       pea       @m68kde~1_111.L
+       pea       @m68kde~1_109.L
        jsr       _printf
        addq.w    #8,A7
 ; printf("\r\n%s", CopyrightMessage) ;
        move.l    -4(A6),-(A7)
-       pea       @m68kde~1_111.L
+       pea       @m68kde~1_109.L
        jsr       _printf
        addq.w    #8,A7
 ; // update_cursor(40, 20);
 ; // octlAddress = 0xF2;
 ; // octlAddress1 = 0xF2;
-; // changeChar(20 * 80 + 39, ' ');
+; // // changeChar(20 * 80 + 39, ' ');
 ; menu();
        jsr       _menu
        movem.l   (A7)+,D2/A2
@@ -3815,65 +3768,59 @@ main_6:
        dc.b      10,83,97,121,105,110,103,32,72,101,108,108,111
        dc.b      32,87,111,114,108,100,10,0
 @m68kde~1_92:
-       dc.b      10,77,101,109,111,114,121,32,67,104,97,110,103
-       dc.b      101,32,105,110,32,86,71,65,10,0
-@m68kde~1_93:
-       dc.b      10,65,100,100,114,101,115,115,58,32,48,120,37
-       dc.b      48,52,88,44,32,68,97,116,97,58,32,37,99,0
-@m68kde~1_94:
        dc.b      13,10,13,10,80,114,111,103,114,97,109,32,65
        dc.b      66,79,82,84,32,33,33,33,33,33,33,13,10,0
-@m68kde~1_95:
+@m68kde~1_93:
        dc.b      37,115,13,10,0
-@m68kde~1_96:
+@m68kde~1_94:
        dc.b      13,10,13,10,80,114,111,103,114,97,109,32,65
        dc.b      66,79,82,84,32,33,33,33,33,33,0
-@m68kde~1_97:
+@m68kde~1_95:
        dc.b      13,10,85,110,104,97,110,100,108,101,100,32,73
        dc.b      110,116,101,114,114,117,112,116,58,32,73,82
        dc.b      81,37,100,32,33,33,33,33,33,0
-@m68kde~1_98:
+@m68kde~1_96:
        dc.b      65,68,68,82,69,83,83,32,69,82,82,79,82,58,32
        dc.b      49,54,32,111,114,32,51,50,32,66,105,116,32,84
        dc.b      114,97,110,115,102,101,114,32,116,111,47,102
        dc.b      114,111,109,32,97,110,32,79,68,68,32,65,100
        dc.b      100,114,101,115,115,46,46,46,46,0
-@m68kde~1_99:
+@m68kde~1_97:
        dc.b      85,110,104,97,110,100,108,101,100,32,84,114
        dc.b      97,112,32,33,33,33,33,33,0
-@m68kde~1_100:
+@m68kde~1_98:
        dc.b      66,85,83,32,69,114,114,111,114,33,0
-@m68kde~1_101:
+@m68kde~1_99:
        dc.b      65,68,68,82,69,83,83,32,69,114,114,111,114,33
        dc.b      0
-@m68kde~1_102:
+@m68kde~1_100:
        dc.b      73,76,76,69,71,65,76,32,73,78,83,84,82,85,67
        dc.b      84,73,79,78,0
-@m68kde~1_103:
+@m68kde~1_101:
        dc.b      68,73,86,73,68,69,32,66,89,32,90,69,82,79,0
-@m68kde~1_104:
+@m68kde~1_102:
        dc.b      39,67,72,75,39,32,73,78,83,84,82,85,67,84,73
        dc.b      79,78,0
-@m68kde~1_105:
+@m68kde~1_103:
        dc.b      84,82,65,80,86,32,73,78,83,84,82,85,67,84,73
        dc.b      79,78,0
-@m68kde~1_106:
+@m68kde~1_104:
        dc.b      80,82,73,86,73,76,69,71,69,32,86,73,79,76,65
        dc.b      84,73,79,78,0
-@m68kde~1_107:
+@m68kde~1_105:
        dc.b      85,78,73,78,73,84,73,65,76,73,83,69,68,32,73
        dc.b      82,81,0
-@m68kde~1_108:
+@m68kde~1_106:
        dc.b      83,80,85,82,73,79,85,83,32,73,82,81,0
-@m68kde~1_109:
+@m68kde~1_107:
        dc.b      67,80,69,78,32,52,49,50,32,50,48,50,51,87,50
        dc.b      13,10,84,111,109,32,87,97,110,103,44,32,55,54
        dc.b      51,52,48,51,52,56,0
-@m68kde~1_110:
+@m68kde~1_108:
        dc.b      67,111,112,121,114,105,103,104,116,32,40,67
        dc.b      41,32,80,74,32,68,97,118,105,101,115,32,50,48
        dc.b      49,54,0
-@m68kde~1_111:
+@m68kde~1_109:
        dc.b      13,10,37,115,0
        section   bss
        xdef      _i

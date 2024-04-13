@@ -16,7 +16,7 @@ module vga80x40_Altera (
 
     // Font Buffer RAM Memory Signals
     logic [11:0] rom_adB;
-    logic [7:0] rom_doB, what;
+    logic [7:0] rom_doB;
     logic out_R, out_G, out_B;
 
     logic start;
@@ -31,25 +31,25 @@ module vga80x40_Altera (
             start <= 0;
         end
     end
+    logic [7:0]cursor_xxxx, cursor_yyyy;
 
     always_comb begin
         R = {out_R, out_R, out_R, out_R, out_R, out_R, out_R, out_R};
         G = {out_G, out_G, out_G, out_G, out_G, out_G, out_G, out_G};
         B = {out_B, out_B, out_B, out_B, out_B, out_B, out_B, out_B};
-        if (start == 8'h1) begin
+        if (start == 1'b1) begin
             intoit = 8'hF2;
-            default_x = 8'd40;
-            default_y = 8'd20;
+            cursor_xxxx = 8'd40;
+            cursor_yyyy = 8'd20;
         end
         else begin
             intoit = {1'b1, ram_clor[6:0]}; // octl[7:3]   
-            default_x = mem_ocrx;
-            default_y = mem_ocry;
+            cursor_xxxx = mem_ocrx;
+            cursor_yyyy = mem_ocry;
         end
     end
  
     logic [7:0]intoit;
-    logic [7:0]defult_x, defult_y;
     vga80x40 vga80x40 (
         .reset(reset),
         .clk25MHz(clk25MHz),
@@ -62,8 +62,8 @@ module vga80x40_Altera (
         .TEXT_D(ram_doB),
         .FONT_A(rom_adB),
         .FONT_D(rom_doB),
-        .ocrx(default_x),
-        .ocry(default_y),
+        .ocrx(cursor_xxxx),
+        .ocry(cursor_yyyy),
         .octl(intoit) // 8'b11110010
     );
     logic [11:0] address_shift;

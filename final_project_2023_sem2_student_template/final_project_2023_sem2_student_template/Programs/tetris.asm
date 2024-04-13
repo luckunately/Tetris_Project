@@ -119,6 +119,25 @@ Wait1ms_here_3:
        rts
 ; ;
 ; }
+; void Wait100ms_here(void)
+; {
+       xdef      _Wait100ms_here
+_Wait100ms_here:
+       move.l    D2,-(A7)
+; int what;
+; for (what = 0; what < 100; what++)
+       clr.l     D2
+Wait100ms_here_1:
+       cmp.l     #100,D2
+       bge.s     Wait100ms_here_3
+; Wait1ms_here();
+       jsr       _Wait1ms_here
+       addq.l    #1,D2
+       bra       Wait100ms_here_1
+Wait100ms_here_3:
+       move.l    (A7)+,D2
+       rts
+; }
 ; void Wait250ms_here(void)
 ; {
        xdef      _Wait250ms_here
@@ -135,6 +154,25 @@ Wait250ms_here_1:
        addq.l    #1,D2
        bra       Wait250ms_here_1
 Wait250ms_here_3:
+       move.l    (A7)+,D2
+       rts
+; }
+; void Wait300ms_here(void)
+; {
+       xdef      _Wait300ms_here
+_Wait300ms_here:
+       move.l    D2,-(A7)
+; int what;
+; for (what = 0; what < 300; what++)
+       clr.l     D2
+Wait300ms_here_1:
+       cmp.l     #300,D2
+       bge.s     Wait300ms_here_3
+; Wait1ms_here();
+       jsr       _Wait1ms_here
+       addq.l    #1,D2
+       bra       Wait300ms_here_1
+Wait300ms_here_3:
        move.l    (A7)+,D2
        rts
 ; }
@@ -346,8 +384,8 @@ clear_screen_3:
 ; {
        xdef      _say_game_over
 _say_game_over:
-; talkphonemeGG2();
-       jsr       _talkphonemeGG2
+; talkphonemeGG1();
+       jsr       _talkphonemeGG1
 ; talkphonemeEY();
        jsr       _talkphonemeEY
 ; talkphonemeMM();
@@ -384,10 +422,12 @@ _say_awesome:
 ; {
        xdef      _say_cool
 _say_cool:
-; talkphonemeKK2();
-       jsr       _talkphonemeKK2
-; talkphonemeUW2();
-       jsr       _talkphonemeUW2
+; talkphonemeKK3();
+       jsr       _talkphonemeKK3
+; talkphonemeUH();
+       jsr       _talkphonemeUH
+; talkphonemeUH();
+       jsr       _talkphonemeUH
 ; talkphonemeEL();
        jsr       _talkphonemeEL
 ; endword();
@@ -398,8 +438,8 @@ _say_cool:
 ; {
        xdef      _say_yeah
 _say_yeah:
-; talkphonemeYY1();
-       jsr       _talkphonemeYY1
+; talkphonemeYY2();
+       jsr       _talkphonemeYY2
 ; talkphonemeEH();
        jsr       _talkphonemeEH
 ; talkphonemeEH();
@@ -708,8 +748,8 @@ display_game_over_1:
        move.b    0(A0,D4.L),D0
        beq       display_game_over_3
 ; {
-; Wait250ms_here();
-       jsr       _Wait250ms_here
+; Wait100ms_here();
+       jsr       _Wait100ms_here
 ; update_cursor(x + 1, y);
        move.l    D3,-(A7)
        move.l    D2,D1
@@ -820,8 +860,13 @@ _gameOver:
        add.w     #12,A7
 ; FlushKeyboard() ; 
        jsr       _FlushKeyboard
-; printf("Press any key to continue\n");
+; printf("\n\nGame over! \nYour score was: %d\n", tetris_score);
+       move.l    _tetris_score.L,-(A7)
        pea       @tetris_5.L
+       jsr       _printf
+       addq.w    #8,A7
+; printf("\nPress any key to continue\n");
+       pea       @tetris_6.L
        jsr       _printf
        addq.w    #4,A7
 ; while (1)
@@ -847,7 +892,7 @@ gameOver_1:
 ; printw_y = 22;
        move.l    #22,(A2)
 ; printw(score_str, "score");
-       pea       @tetris_6.L
+       pea       @tetris_7.L
        move.l    A4,-(A7)
        jsr       _printw
        addq.w    #8,A7
@@ -860,8 +905,8 @@ gameOver_1:
        bra.s     gameOver_3
 gameOver_4:
 ; }
-; Wait250ms_here();
-       jsr       _Wait250ms_here
+; Wait300ms_here();
+       jsr       _Wait300ms_here
 ; ++num;
        addq.b    #1,D2
 ; if (num > 7)
@@ -1496,8 +1541,8 @@ PrintTable_9:
 ; go_to_top_corner();
        jsr       _go_to_top_corner
 ; printw("\n\n\n", "initial_newline");
+       pea       @tetris_9.L
        pea       @tetris_8.L
-       pea       @tetris_7.L
        jsr       (A3)
        addq.w    #8,A7
 ; for (i = 0; i < TETRIS_COLS - 9; i++)
@@ -1507,8 +1552,8 @@ PrintTable_15:
        bge.s     PrintTable_17
 ; {
 ; printw(" ", "space");
+       pea       @tetris_11.L
        pea       @tetris_10.L
-       pea       @tetris_9.L
        jsr       (A3)
        addq.w    #8,A7
        addq.l    #1,D2
@@ -1516,8 +1561,8 @@ PrintTable_15:
 PrintTable_17:
 ; }
 ; printw("CPEN412 Tetris\n", "title");
+       pea       @tetris_13.L
        pea       @tetris_12.L
-       pea       @tetris_11.L
        jsr       (A3)
        addq.w    #8,A7
 ; for (i = 0; i < TETRIS_ROWS; i++)
@@ -1545,7 +1590,7 @@ PrintTable_21:
        beq.s     PrintTable_24
 ; {
 ; printwColor("#", TableColor[i][j], "table#");
-       pea       @tetris_14.L
+       pea       @tetris_15.L
        move.l    D2,D1
        muls      #15,D1
        lea       _TableColor.L,A0
@@ -1554,7 +1599,7 @@ PrintTable_21:
        ext.w     D1
        ext.l     D1
        move.l    D1,-(A7)
-       pea       @tetris_13.L
+       pea       @tetris_14.L
        jsr       _printwColor
        add.w     #12,A7
        bra.s     PrintTable_25
@@ -1563,8 +1608,8 @@ PrintTable_24:
 ; else
 ; {
 ; printw(".", "table.");
+       pea       @tetris_17.L
        pea       @tetris_16.L
-       pea       @tetris_15.L
        jsr       (A3)
        addq.w    #8,A7
 PrintTable_25:
@@ -1575,8 +1620,8 @@ PrintTable_23:
 ; // printw(" ","space2");
 ; }
 ; printw("\n", "newline1");
+       pea       @tetris_19.L
        pea       @tetris_18.L
-       pea       @tetris_17.L
        jsr       (A3)
        addq.w    #8,A7
        addq.l    #1,D2
@@ -1585,12 +1630,12 @@ PrintTable_20:
 ; }
 ; sprintf(score_str, "\nScore: %d\n", tetris_score);
        move.l    _tetris_score.L,-(A7)
-       pea       @tetris_19.L
+       pea       @tetris_20.L
        pea       -428(A6)
        jsr       _sprintf
        add.w     #12,A7
 ; printw(score_str, "scoreprint");
-       pea       @tetris_20.L
+       pea       @tetris_21.L
        pea       -428(A6)
        jsr       (A3)
        addq.w    #8,A7
@@ -1817,30 +1862,16 @@ tetris_mainloop_3:
 ; // 		octlAddress1 = 0xE2;
 ; // 	}
 ; // }
-; void testSound(){
-       xdef      _testSound
-_testSound:
-       move.l    A2,-(A7)
-       lea       _Wait250ms_here.L,A2
-; say_awesome();
-       jsr       _say_awesome
-; Wait250ms_here();
-       jsr       (A2)
-; say_cool();
-       jsr       _say_cool
-; Wait250ms_here();
-       jsr       (A2)
-; say_yeah();
-       jsr       _say_yeah
-; Wait250ms_here();
-       jsr       (A2)
-; say_game_over();
-       jsr       _say_game_over
-; Wait250ms_here();
-       jsr       (A2)
-       move.l    (A7)+,A2
-       rts
-; }
+; // void testSound(){
+; //     say_awesome();
+; // 	Wait250ms_here();
+; // 	say_cool();
+; // 	Wait250ms_here();
+; // 	say_yeah();
+; // 	Wait250ms_here();
+; // 	say_game_over();
+; // 	Wait250ms_here();
+; // }
 ; int tetris_main()
 ; {
        xdef      _tetris_main
@@ -1853,39 +1884,49 @@ _tetris_main:
 ; int i, j;
 ; int test1;
 ; char score_str[128];
-; while(1){
-tetris_main_1:
-; testSound();
-       jsr       _testSound
-       bra       tetris_main_1
-tetris_main_4:
-       cmp.l     #15,D2
-       bge       tetris_main_6
-; }
+; // while(1){
+; // 	testSound();
+; // }
 ; // test();
 ; timer_count = 0;
+       clr.l     _timer_count.L
 ; printw_x = 0;
+       clr.l     _printw_x.L
 ; printw_y = 0;
+       clr.l     _printw_y.L
 ; GameOn = TRUE;
+       move.b    #1,_GameOn.L
 ; InstallExceptionHandler(Timer_ISR, 30);
+       pea       30
+       pea       _Timer_ISR.L
+       jsr       _InstallExceptionHandler
+       addq.w    #8,A7
 ; Timer1Data = 0x25; // 100 ms
+       move.b    #37,4194352
 ; Timer1Control = 3; // enable timer, periodic mode
+       move.b    #3,4194354
 ; // InstallExceptionHandler(Timer_ISR, 29);
 ; // InstallExceptionHandler(Timer_ISR, 28);
 ; // InstallExceptionHandler(Timer_ISR, 27);
 ; // InstallExceptionHandler(Timer_ISR, 26);
 ; // InstallExceptionHandler(Timer_ISR, 25);
 ; octl = OCTL_TETRIS_DEFAULT;
+       move.b    #162,_octl.L
 ; octlAddress = octl;
+       move.b    _octl.L,-16580608
 ; for (j = 0; j < TETRIS_COLS; j++)
+       clr.l     D2
+tetris_main_1:
+       cmp.l     #15,D2
+       bge       tetris_main_3
 ; {
 ; Table[0][j] = 2; // default color
        move.b    #2,0(A4,D2.L)
 ; for (i = 0; i < TETRIS_ROWS; i++)
        clr.l     D3
-tetris_main_7:
+tetris_main_4:
        cmp.l     #20,D3
-       bge.s     tetris_main_9
+       bge.s     tetris_main_6
 ; {
 ; Table[i][j] = 0;
        move.l    D3,D0
@@ -1900,11 +1941,11 @@ tetris_main_7:
        add.l     D0,A0
        move.b    #2,0(A0,D2.L)
        addq.l    #1,D3
-       bra       tetris_main_7
-tetris_main_9:
-       addq.l    #1,D2
        bra       tetris_main_4
 tetris_main_6:
+       addq.l    #1,D2
+       bra       tetris_main_1
+tetris_main_3:
 ; }
 ; }
 ; // S shape
@@ -2085,57 +2126,57 @@ tetris_main_6:
        jsr       _gameOver
 ; for (i = 0; i < TETRIS_ROWS; i++)
        clr.l     D3
-tetris_main_10:
+tetris_main_7:
        cmp.l     #20,D3
-       bge       tetris_main_12
+       bge       tetris_main_9
 ; {
 ; for (j = 0; j < TETRIS_COLS; j++)
        clr.l     D2
-tetris_main_13:
+tetris_main_10:
        cmp.l     #15,D2
-       bge.s     tetris_main_15
+       bge.s     tetris_main_12
 ; {
 ; if (Table[i][j])
        move.l    D3,D0
        muls      #15,D0
        lea       0(A4,D0.L),A0
        tst.b     0(A0,D2.L)
-       beq.s     tetris_main_16
+       beq.s     tetris_main_13
 ; {
 ; printf("#");
-       pea       @tetris_13.L
+       pea       @tetris_14.L
        jsr       (A3)
        addq.w    #4,A7
-       bra.s     tetris_main_17
-tetris_main_16:
+       bra.s     tetris_main_14
+tetris_main_13:
 ; }
 ; else
 ; {
 ; printf(".");
-       pea       @tetris_15.L
+       pea       @tetris_16.L
        jsr       (A3)
        addq.w    #4,A7
-tetris_main_17:
+tetris_main_14:
        addq.l    #1,D2
-       bra       tetris_main_13
-tetris_main_15:
-; }
-; }
-; printf("\n");
-       pea       @tetris_17.L
-       jsr       (A3)
-       addq.w    #4,A7
-       addq.l    #1,D3
        bra       tetris_main_10
 tetris_main_12:
 ; }
+; }
+; printf("\n");
+       pea       @tetris_18.L
+       jsr       (A3)
+       addq.w    #4,A7
+       addq.l    #1,D3
+       bra       tetris_main_7
+tetris_main_9:
+; }
 ; printf("\nGame over!\n");
-       pea       @tetris_21.L
+       pea       @tetris_22.L
        jsr       (A3)
        addq.w    #4,A7
 ; sprintf(score_str, "\nScore: %d\n", tetris_score);
        move.l    _tetris_score.L,-(A7)
-       pea       @tetris_19.L
+       pea       @tetris_20.L
        pea       -128(A6)
        jsr       _sprintf
        add.w     #12,A7
@@ -2159,42 +2200,46 @@ tetris_main_12:
 @tetris_4:
        dc.b      32,83,99,111,114,101,58,32,37,100,32,0
 @tetris_5:
-       dc.b      80,114,101,115,115,32,97,110,121,32,107,101
+       dc.b      10,10,71,97,109,101,32,111,118,101,114,33,32
+       dc.b      10,89,111,117,114,32,115,99,111,114,101,32,119
+       dc.b      97,115,58,32,37,100,10,0
+@tetris_6:
+       dc.b      10,80,114,101,115,115,32,97,110,121,32,107,101
        dc.b      121,32,116,111,32,99,111,110,116,105,110,117
        dc.b      101,10,0
-@tetris_6:
-       dc.b      115,99,111,114,101,0
 @tetris_7:
-       dc.b      10,10,10,0
+       dc.b      115,99,111,114,101,0
 @tetris_8:
+       dc.b      10,10,10,0
+@tetris_9:
        dc.b      105,110,105,116,105,97,108,95,110,101,119,108
        dc.b      105,110,101,0
-@tetris_9:
-       dc.b      32,0
 @tetris_10:
-       dc.b      115,112,97,99,101,0
+       dc.b      32,0
 @tetris_11:
+       dc.b      115,112,97,99,101,0
+@tetris_12:
        dc.b      67,80,69,78,52,49,50,32,84,101,116,114,105,115
        dc.b      10,0
-@tetris_12:
-       dc.b      116,105,116,108,101,0
 @tetris_13:
-       dc.b      35,0
+       dc.b      116,105,116,108,101,0
 @tetris_14:
-       dc.b      116,97,98,108,101,35,0
+       dc.b      35,0
 @tetris_15:
-       dc.b      46,0
+       dc.b      116,97,98,108,101,35,0
 @tetris_16:
-       dc.b      116,97,98,108,101,46,0
+       dc.b      46,0
 @tetris_17:
-       dc.b      10,0
+       dc.b      116,97,98,108,101,46,0
 @tetris_18:
-       dc.b      110,101,119,108,105,110,101,49,0
+       dc.b      10,0
 @tetris_19:
-       dc.b      10,83,99,111,114,101,58,32,37,100,10,0
+       dc.b      110,101,119,108,105,110,101,49,0
 @tetris_20:
-       dc.b      115,99,111,114,101,112,114,105,110,116,0
+       dc.b      10,83,99,111,114,101,58,32,37,100,10,0
 @tetris_21:
+       dc.b      115,99,111,114,101,112,114,105,110,116,0
+@tetris_22:
        dc.b      10,71,97,109,101,32,111,118,101,114,33,10,0
        section   bss
        xdef      _Table
@@ -2243,11 +2288,10 @@ _cy:
 _timer_count:
        ds.b      4
        xref      _talkphonemeVV
-       xref      _talkphonemeKK2
-       xref      _talkphonemeGG2
-       xref      _talkphonemeUW2
        xref      LDIV
        xref      LMUL
+       xref      _talkphonemeKK3
+       xref      _talkphonemeGG1
        xref      _talkphonemeOW
        xref      _endword
        xref      _talkphonemeAO
@@ -2258,9 +2302,10 @@ _timer_count:
        xref      _sprintf
        xref      _talkphonemeEL
        xref      _talkphonemeEH
+       xref      _talkphonemeUH
        xref      _FlushKeyboard
+       xref      _talkphonemeYY2
        xref      _InstallExceptionHandler
-       xref      _talkphonemeYY1
        xref      _talkphonemeMM
        xref      _talkphonemeEY
        xref      _talkphonemeAA

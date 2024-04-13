@@ -50,7 +50,7 @@ module AddressDecoder_Verilog (
 			DramSelect_H <= 1;
 		
 		// 12 bits assigned to VGA memory
-		if ((Address[31:16] == 16'hFFFF))
+		if ((Address[31:12] == 20'hFFFF0) || (Address[31:12] == 20'hFFFF1) || (Address[31:12] == 20'hFFFF2))
 			GraphicsCS_L <= 1;
 
 		if (Address == 32'hFF00_FFFE)

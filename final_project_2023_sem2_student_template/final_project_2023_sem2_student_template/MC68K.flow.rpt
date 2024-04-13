@@ -1,5 +1,5 @@
 Flow report for MC68K
-Fri Apr 12 16:55:35 2024
+Fri Apr 12 20:02:40 2024
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,18 +40,18 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Fri Apr 12 16:55:03 2024       ;
+; Flow Status                     ; Successful - Fri Apr 12 20:02:19 2024       ;
 ; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                   ; MC68K                                       ;
 ; Top-level Entity Name           ; MC68K                                       ;
 ; Family                          ; Cyclone V                                   ;
 ; Device                          ; 5CSEMA5F31C6                                ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; 3,173 / 32,070 ( 10 % )                     ;
-; Total registers                 ; 3315                                        ;
+; Logic utilization (in ALMs)     ; 2,974 / 32,070 ( 9 % )                      ;
+; Total registers                 ; 2239                                        ;
 ; Total pins                      ; 224 / 457 ( 49 % )                          ;
 ; Total virtual pins              ; 0                                           ;
-; Total block memory bits         ; 2,996,444 / 4,065,280 ( 74 % )              ;
+; Total block memory bits         ; 2,977,120 / 4,065,280 ( 73 % )              ;
 ; Total DSP Blocks                ; 0 / 87 ( 0 % )                              ;
 ; Total HSSI RX PCSs              ; 0                                           ;
 ; Total HSSI PMA RX Deserializers ; 0                                           ;
@@ -67,7 +67,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/12/2024 16:48:03 ;
+; Start date & time ; 04/12/2024 19:56:05 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; MC68K               ;
 +-------------------+---------------------+
@@ -80,7 +80,7 @@ refer to the applicable agreement for further details.
 +------------------------------------------------------+-------------------------------------------------------------------------+--------------------+-------------+-------------------------------------------------------------+
 ; ALLOW_POWER_UP_DONT_CARE                             ; Off                                                                     ; On                 ; --          ; --                                                          ;
 ; AUTO_PARALLEL_SYNTHESIS                              ; On                                                                      ; Off                ; --          ; --                                                          ;
-; COMPILER_SIGNATURE_ID                                ; 10995770589204.171296568322508                                          ; --                 ; --          ; --                                                          ;
+; COMPILER_SIGNATURE_ID                                ; 10995770589204.171297696424492                                          ; --                 ; --          ; --                                                          ;
 ; DO_COMBINED_ANALYSIS                                 ; -- (Not supported for targeted family)                                  ; Off                ; --          ; --                                                          ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST                      ; Off                                                                     ; --                 ; --          ; eda_simulation                                              ;
 ; EDA_GENERATE_GATE_LEVEL_SIMULATION_COMMAND_SCRIPT    ; Off                                                                     ; --                 ; --          ; eda_simulation                                              ;
@@ -185,10 +185,10 @@ refer to the applicable agreement for further details.
 ; SLD_NODE_PARAMETER_ASSIGNMENT                        ; SLD_INVERSION_MASK=000000000000000000000                                ; --                 ; --          ; auto_signaltap_0                                            ;
 ; SLD_NODE_PARAMETER_ASSIGNMENT                        ; SLD_INVERSION_MASK_LENGTH=21                                            ; --                 ; --          ; auto_signaltap_0                                            ;
 ; SLD_NODE_PARAMETER_ASSIGNMENT                        ; SLD_ENABLE_ADVANCED_TRIGGER=1                                           ; --                 ; --          ; auto_signaltap_0                                            ;
-; SLD_NODE_PARAMETER_ASSIGNMENT                        ; SLD_DATA_BITS=105                                                       ; --                 ; --          ; auto_signaltap_0                                            ;
-; SLD_NODE_PARAMETER_ASSIGNMENT                        ; SLD_TRIGGER_BITS=105                                                    ; --                 ; --          ; auto_signaltap_0                                            ;
-; SLD_NODE_PARAMETER_ASSIGNMENT                        ; SLD_STORAGE_QUALIFIER_BITS=105                                          ; --                 ; --          ; auto_signaltap_0                                            ;
-; SLD_NODE_PARAMETER_ASSIGNMENT                        ; SLD_ADVANCED_TRIGGER_ENTITY=sld_reserved_MC68K_auto_signaltap_0_1_2153, ; --                 ; --          ; auto_signaltap_0                                            ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                        ; SLD_DATA_BITS=18                                                        ; --                 ; --          ; auto_signaltap_0                                            ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                        ; SLD_TRIGGER_BITS=18                                                     ; --                 ; --          ; auto_signaltap_0                                            ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                        ; SLD_STORAGE_QUALIFIER_BITS=18                                           ; --                 ; --          ; auto_signaltap_0                                            ;
+; SLD_NODE_PARAMETER_ASSIGNMENT                        ; SLD_ADVANCED_TRIGGER_ENTITY=sld_reserved_MC68K_auto_signaltap_0_1_1c96, ; --                 ; --          ; auto_signaltap_0                                            ;
 ; SPD_FILE                                             ; ClockGen.spd                                                            ; --                 ; --          ; --                                                          ;
 ; STATE_MACHINE_PROCESSING                             ; User-Encoded                                                            ; Auto               ; --          ; --                                                          ;
 ; SYNCHRONIZER_IDENTIFICATION                          ; Auto                                                                    ; Off                ; --          ; --                                                          ;
@@ -208,11 +208,11 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:01:49     ; 1.0                     ; 5089 MB             ; 00:01:31                           ;
-; Fitter               ; 00:04:49     ; 1.4                     ; 8242 MB             ; 00:13:58                           ;
-; Assembler            ; 00:00:14     ; 1.0                     ; 4939 MB             ; 00:00:12                           ;
-; Timing Analyzer      ; 00:00:31     ; 2.5                     ; 5603 MB             ; 00:01:01                           ;
-; Total                ; 00:07:23     ; --                      ; --                  ; 00:16:42                           ;
+; Analysis & Synthesis ; 00:01:42     ; 1.0                     ; 5077 MB             ; 00:01:27                           ;
+; Fitter               ; 00:04:10     ; 1.4                     ; 8194 MB             ; 00:12:52                           ;
+; Assembler            ; 00:00:14     ; 1.0                     ; 4925 MB             ; 00:00:12                           ;
+; Timing Analyzer      ; 00:00:20     ; 3.2                     ; 5588 MB             ; 00:00:48                           ;
+; Total                ; 00:06:26     ; --                      ; --                  ; 00:15:19                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

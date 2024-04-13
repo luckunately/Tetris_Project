@@ -85,10 +85,24 @@ void Wait1ms_here(void)
 		;
 }
 
+void Wait100ms_here(void)
+{
+	int what;
+	for (what = 0; what < 100; what++)
+		Wait1ms_here();
+}
+
 void Wait250ms_here(void)
 {
 	int what;
 	for (what = 0; what < 250; what++)
+		Wait1ms_here();
+}
+
+void Wait300ms_here(void)
+{
+	int what;
+	for (what = 0; what < 300; what++)
 		Wait1ms_here();
 }
 
@@ -153,7 +167,7 @@ void clear_screen()
 
 void say_game_over()
 {
-	talkphonemeGG2();
+	talkphonemeGG1();
 	talkphonemeEY();
 	talkphonemeMM();
 	endword();
@@ -174,15 +188,16 @@ void say_awesome()
 
 void say_cool()
 {
-	talkphonemeKK2();
-	talkphonemeUW2();
+	talkphonemeKK3();
+	talkphonemeUH();
+	talkphonemeUH();
 	talkphonemeEL();
 	endword();
 }
 
 void say_yeah()
 {
-	talkphonemeYY1();
+	talkphonemeYY2();
 	talkphonemeEH();
 	talkphonemeEH();
 	endword();
@@ -294,7 +309,7 @@ void display_game_over(char *str, int x, int y)
 	num = 0;
 	while (str[num] != '\0')
 	{
-		Wait250ms_here();
+		Wait100ms_here();
 		update_cursor(x + 1, y);
 		putcharxy(x + 1, y, ' ', "game over");
 		// printf("cx: %d, cy: %d\n", cx, cy);
@@ -327,7 +342,8 @@ void gameOver()
 	printw_y = 22;
 	display_game_over(score_str, printw_x, printw_y);
 	FlushKeyboard() ; 
-	printf("Press any key to continue\n");
+	printf("\n\nGame over! \nYour score was: %d\n", tetris_score);
+	printf("\nPress any key to continue\n");
 	while (1)
 	{
 		printw_x = 34;
@@ -342,7 +358,7 @@ void gameOver()
 		{
 			break;
 		}
-		Wait250ms_here();
+		Wait300ms_here();
 		++num;
 		if (num > 7)
 		{
@@ -639,24 +655,24 @@ void tetris_mainloop()
 // 	}
 
 // }
-void testSound(){
-    say_awesome();
-	Wait250ms_here();
-	say_cool();
-	Wait250ms_here();
-	say_yeah();
-	Wait250ms_here();
-	say_game_over();
-	Wait250ms_here();
-}
+// void testSound(){
+//     say_awesome();
+// 	Wait250ms_here();
+// 	say_cool();
+// 	Wait250ms_here();
+// 	say_yeah();
+// 	Wait250ms_here();
+// 	say_game_over();
+// 	Wait250ms_here();
+// }
 int tetris_main()
 {
 	int i, j;
 	int test1;
 	char score_str[128];
-	while(1){
-		testSound();
-	}
+	// while(1){
+	// 	testSound();
+	// }
 	// test();
 	timer_count = 0;
 	printw_x = 0;

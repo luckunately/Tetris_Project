@@ -1033,30 +1033,30 @@ void menu(void)
 			   continue;
         }
 
-        if ( c == (char)('V'))  {
-            printf("\nMemory Change in VGA\n");
-            // while (1) {
-            //     printf("\nAddress: 0x0000 to 0x0FFF");
-            //     addr = Get4HexDigits(0);
-            //     printf("\nData: ");
-            //     data = Get2HexDigits(0);
-            //     writeVGA(addr, data);
-            // }
-            j = 0;
-            z = 0;
-            // 一排80个
-            // 一共40排
-            for (i = 0; i <= 0xFFFF; i++) {
-                data = (j + 'A');
-                writeVGA_debug(i, data, z);
-                ++j; ++z;
-                if (z == 8) z = 1;
-                if (j == 26) j = 0;
-                printf("\nAddress: 0x%04X, Data: %c", i, j + 'A');
-                Wait1ms();
-            }
-            continue;
-        }
+        // if ( c == (char)('V'))  {
+        //     printf("\nMemory Change in VGA\n");
+        //     // while (1) {
+        //     //     printf("\nAddress: 0x0000 to 0x0FFF");
+        //     //     addr = Get4HexDigits(0);
+        //     //     printf("\nData: ");
+        //     //     data = Get2HexDigits(0);
+        //     //     writeVGA(addr, data);
+        //     // }
+        //     j = 0;
+        //     z = 0;
+        //     // 一排80个
+        //     // 一共40排
+        //     for (i = 0; i <= 0xFFFF; i++) {
+        //         data = (j + 'A');
+        //         writeVGA_debug(i, data, z);
+        //         ++j; ++z;
+        //         if (z == 8) z = 1;
+        //         if (j == 26) j = 0;
+        //         printf("\nAddress: 0x%04X, Data: %c", i, j + 'A');
+        //         Wait1ms();
+        //     }
+        //     continue;
+        // }
 
         // if ( c == (char)('M'))  {
         //     while (1){
@@ -1251,7 +1251,7 @@ void main(void)
     // update_cursor(40, 20);
     // octlAddress = 0xF2;
     // octlAddress1 = 0xF2;
-    // changeChar(20 * 80 + 39, ' ');
+    // // changeChar(20 * 80 + 39, ' ');
     menu();
 }
 
