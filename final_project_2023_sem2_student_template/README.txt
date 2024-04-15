@@ -9,8 +9,11 @@ All the specified requirements are implemented. The project is working as expect
 
 
 
-URL: https://youtu.be/A5EqRo_7LXA?si=-p_t2zAI9vsIzZRR
-First minute is the demo of the reference solution, the rest is showing my solution.
+URL: https://youtu.be/wZtuN_ODXaM
+Dementrated it can produce sound (Hello World, Cool, Awesome, Yeah, Game Over), display VGA (Tetris game and starting screen), and play the game.
+Blocks are in different colors. User can interact with the game using the keyboard. 
+Timer interrupt is used to update the game state and VGA display.
+Time goes faster as the more scores are achieved.
 
 
 Sof is at 
